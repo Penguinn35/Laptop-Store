@@ -6,27 +6,7 @@
   <title>Laptop Store Việt Nam</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<style>
-  .navbar{
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    padding: 1.3rem 10%;
-    z-index: 2;
-    display: flex;
-    flex-direction: row;
-  }
-  .user{
 
-  }
-  .nav-links{
-    margin: 0px;
-  }
-  .logo {
-    color: black;
-  }
-</style>
 
 <body>
   <?php
@@ -38,33 +18,53 @@
 
   <!-- NAVBAR -->
 
-  <nav class="navbar">
-    <a class="logo" href="#">LaptopStore</a>
+  <div class="navbar-wrap">
+    <nav class="navbar">
 
-    <div class="user">
-      <?php if (!$isLoggedIn): ?>
-        <button id="loginBtn" class="">Đăng nhập</button>
-        <button id="registerBtn" class="">Đăng ký</button>
-      <?php else: ?>
-        <div class="user-menu">
-          <img src="assets/user.png" alt="User" class="user-icon" id="userDropdown">
-          <div class="dropdown" id="dropdownMenu">
+      <!-- Logo -->
+      <a class="logo" href="index.php">LaptopStore</a>
+
+      <!-- Hamburger icon (mobile only) -->
+      <div class="hamburger" id="hamburgerBtn">
+        <span></span><span></span><span></span>
+      </div>
+
+      <!-- Nav links -->
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.php">Trang chủ</a></li>
+        <li><a href="products.php">Sản phẩm</a></li>
+        <li><a href="news.php">Tin tức</a></li>
+        <li><a href="contact.php">Liên hệ</a></li>
+        <li class="mobile-user">
+          <?php if (!$isLoggedIn): ?>
+            <button id="loginBtn_mobile" class="btn-small">Đăng nhập</button>
+            <button id="registerBtn_mobile" class="btn-small">Đăng ký</button>
+          <?php else: ?>
             <a href="profile.php">Thay đổi thông tin</a>
             <a href="logout.php">Đăng xuất</a>
+          <?php endif; ?>
+        </li>
+      </ul>
+
+
+      <!-- User section -->
+      <div class="user">
+        <?php if (!$isLoggedIn): ?>
+          <button id="loginBtn" class="btn-small">Đăng nhập</button>
+          <button id="registerBtn" class="btn-small">Đăng ký</button>
+        <?php else: ?>
+          <div class="user-menu">
+            <img src="assets/user.png" alt="User" class="user-icon" id="userDropdown">
+            <div class="dropdown" id="dropdownMenu">
+              <a href="profile.php">Thay đổi thông tin</a>
+              <a href="logout.php">Đăng xuất</a>
+            </div>
           </div>
-        </div>
-      <?php endif; ?>
-    </div>
+        <?php endif; ?>
+      </div>
 
-    <ul class="nav-links">
-      <li><a href="index.php">Trang chủ</a></li>
-      <li><a href="products.php">Sản phẩm</a></li>
-      <li><a href="news.php">Tin tức</a></li>
-      <li><a href="contact.php">Liên hệ</a></li>
-    </ul>
-
-
-  </nav>
+    </nav>
+  </div>
 
 
   <!-- Popup -->
@@ -94,9 +94,35 @@
       });
     });
 
+    $("#loginBtn_mobile").on("click", () => {
+      $.get("ajax/login_form.php", html => {
+        popupContent.html(html);
+        overlay.addClass("show");
+      });
+    });
+
+    $("#registerBtn_mobile").on("click", () => {
+      $.get("ajax/register_form.php", html => {
+        popupContent.html(html);
+        overlay.addClass("show");
+      });
+    });
+
+
     $(".close").on("click", () => overlay.removeClass("show"));
     $(window).on("click", e => {
       if ($(e.target).is("#popupOverlay")) overlay.removeClass("show");
+    });
+
+    document.getElementById("hamburgerBtn").addEventListener("click", () => {
+      document.getElementById("navLinks").classList.toggle("show");
+    });
+
+    // Close mobile menu when clicking outside
+    window.addEventListener("click", (e) => {
+      if (!e.target.closest(".navbar")) {
+        document.getElementById("navLinks").classList.remove("show");
+      }
     });
 
     // user dropdown
