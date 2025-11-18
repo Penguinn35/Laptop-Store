@@ -102,13 +102,4 @@ CREATE TABLE settings (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-INSERT INTO brands (name) VALUES 
-('Dell'), ('Asus'), ('HP'), ('Acer');
 
-INSERT INTO laptops (brand_id, name, price, stock) VALUES
-(1, 'Dell XPS 13', 32000000, 10),
-(2, 'Asus TUF Gaming F15', 25000000, 5),
-(3, 'HP Spectre x360', 34000000, 8);
-
-INSERT INTO users (username, password, fullname, role)
-VALUES ('admin', '123456', 'Admin User', 'admin');

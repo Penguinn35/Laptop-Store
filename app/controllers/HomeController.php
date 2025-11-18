@@ -1,5 +1,13 @@
 <?php
-require __DIR__ . '/../models/Laptop.php';
-$laptops = Laptop::all($pdo);
-require __DIR__ . '/../views/home.php';
-?>
+
+class HomeController
+{
+
+    public function index()
+    {
+        $view = "home.php";                   
+        include "../app/views/layouts/header.php";
+        include "../app/views/$view";
+        include "../app/views/layouts/footer.php";
+    }
+}

@@ -14,7 +14,7 @@
 $("#registerForm").on("submit", function (e) {
   e.preventDefault();
   $.ajax({
-    url: "ajax/register_action.php",
+    url: "/laptop_store/public/api/auth/register_action.php",
     type: "POST",
     data: $(this).serialize(),
     dataType: "json",
