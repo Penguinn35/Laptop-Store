@@ -20,10 +20,10 @@ $user = $_SESSION['user'] ?? null;
 
     <!-- Nav links -->
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.php">Trang chủ</a></li>
-      <li><a href="products.php">Sản phẩm</a></li>
-      <li><a href="news.php">Tin tức</a></li>
-      <li><a href="contact.php">Liên hệ</a></li>
+      <li><a href="/laptop_store/public/index.php?page=home">Trang chủ</a></li>
+      <li><a href="/laptop_store/public/index.php?page=products">Sản phẩm</a></li>
+      <li><a href="/laptop_store/public/index.php?page=news">Tin tức</a></li>
+      <li><a href="/laptop_store/public/index.php?page=contact">Liên hệ</a></li>
       <li class="mobile-user">
         <?php if (!$isLoggedIn): ?>
           <button id="loginBtn_mobile" class="btn-small">Đăng nhập</button>

@@ -8,4 +8,5 @@ class AuthController {
         header("Location: /laptop_store/public/index.php?page=home");
         exit;
     }
+    
 }
