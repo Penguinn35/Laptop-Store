@@ -2,45 +2,12 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   color: #222;
+  padding-top: var(--navbar-height, 72px);
 }
-
-/* Navbar */
-/* .navbar-grap {
-  min-width: 100%;
-  height: 20px;
-  display: flex;
-  z-index: 2;
-position: fixed;
-  top: 0;
-  left: 0;
+:root {
+  --navbar-height: 72px; /* adjust as needed to match actual navbar height */
 }
-
-.navbar {
-  width: 100%;
-  padding: 40px 10%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-}
-
-
-.user {}
-
-.nav-links {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-  margin: 0px auto;
-}
-
-
-.logo {
-  color: black;
-
-} */
-
-/* Wrapper (fixed) */
+/* Navbar wrapper (fixed) */
 .navbar-wrap {
   position: fixed;
   top: 0;
@@ -48,15 +15,16 @@ position: fixed;
   width: 100%;
   background: #b36e6e;
   z-index: 100;
+  height: var(--navbar-height);
 }
 
-/* Desktop navbar */
-.navbar {
+.site-navbar {
   width: 80%;
-  padding: 20px 10%;
+  padding: 0px 10%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100%;
 }
 
 .logo {
@@ -87,15 +55,10 @@ position: fixed;
   cursor: pointer;
 }
 
-.btn-small:hover {
-  background: #005fcc;
-}
+.btn-small:hover { background: #005fcc; }
 
 /* Better user menu UX */
-.user-menu {
-  position: relative;
-}
-
+.user-menu { position: relative; }
 .user-icon {
   width: 32px;
   height: 32px;
@@ -103,12 +66,9 @@ position: fixed;
   border-radius: 50%;
   transition: 0.2s;
 }
+.user-icon:hover { opacity: 0.7; }
 
-.user-icon:hover {
-  opacity: 0.7;
-}
-
-.dropdown {
+.dropdown { /* kept visible rules */
   position: absolute;
   top: 40px;
   right: 0;
@@ -119,6 +79,66 @@ position: fixed;
   display: none;
   flex-direction: column;
 }
+
+.about-container {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-hero {
+  position: relative;
+  min-height: 50vh;
+  color: #fff;
+}
+.about-hero .card-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  position: relative;
+  text-align: center;
+  padding: 0; /* already p-0 in markup */
+}
+.about-hero .card-body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+.about-hero .hero-content {
+  position: relative;
+  padding: 24px 32px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.about-page-creators { padding: 10px 0 10px 0; }
+.about-page-creators .card-title { margin-bottom: 15px; font-size: 24px; font-weight: bold; text-align: center; }
+.creators-grid { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+.creator-card { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); width: 220px; text-align: center; padding: 20px; }
+.creator-card img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; }
+.creator-card h3 { margin: 10px 0 5px 0; }
+.creator-card p.role { font-style: italic; color: #555; margin-bottom: 10px; }
+.creator-card p.bio { font-size: 14px; color: #666; }
+
+.about-page-mission { padding: 0; }
+.about-page-mission .mission-content { max-width: 800px; margin: 0 auto; text-align: left; }
+.about-card { height: 100%; }
+.about-card .card-body { display: flex; flex-direction: column; }
+.about-card .card-title { margin-bottom: 15px; font-size: 24px; font-weight: bold; }
+.about-card .card-text { font-size: 16px; line-height: 1.6; padding-top: 16px; padding-bottom: 16px;}
+
+.about-page-values { padding: 0; background: #f9f9f9; }
+.about-page-values .values-content { max-width: 800px; margin: 0 auto; text-align: left; }
+.about-values-list li { font-size: 16px; line-height: 1.5; color: #555; }
+
+.about-page-contact { padding: 40px 0; }
+.about-page-contact .contact-content { max-width: 600px; margin: 0 auto; text-align: center; }
+.about-page-contact .contact-content h2 { margin-bottom: 20px; }
+.about-page-contact .contact-content p { font-size: 16px; color: #444; margin-bottom: 10px; }
+.about-page-contact .contact-content a { color: #007bff; text-decoration: none; }
+.about-page-contact .contact-content a:hover { text-decoration: underline; }
 
 .dropdown.show {
   display: flex;
@@ -300,23 +320,16 @@ position: fixed;
 
 .btn {
   background: #ffc107;
-  padding: 10px 20px;
+  padding: 10px 10px;
   color: #000;
   text-decoration: none;
   font-weight: bold;
   border-radius: 5px;
+  margin: 0;
 }
 
-/* About */
-.about {
-  padding: 100px 50px;
-  background: #f8f9fa;
-}
-
-.about .container {
-  display: flex;
-  align-items: center;
-  gap: 40px;
+.btn > svg.icon {
+  margin: 0;
 }
 
 /* Products */
@@ -352,4 +365,75 @@ footer {
   color: white;
   text-align: center;
   padding: 20px 0;
+}
+
+/* FAQ */
+
+.faq-page-header {
+  margin-bottom: 40px;
+}
+
+.faq-page-title {
+  margin-top: 10px;
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.hr-text::before,
+.hr-text::after {
+  content: "";
+  flex: 1;
+  border-bottom: 5px solid rgba(0, 123, 255, 0.5);
+}
+.hr-text {
+  font-weight: bold;
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-top: 20px;
+}
+
+.accordion {
+  border-radius: 0;
+  margin-top: 40px;
+  overflow: hidden;
+}
+
+.accordion-item {
+  border: none;
+  border-bottom: 1px solid rgba(0, 123, 255);
+  border-radius: 0 !important;
+}
+
+.accordion-button {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.accordion-button-toggle {
+  flex-shrink: 0;
+  margin-left: 0;
+}
+
+.accordion-button:active .accordion-button-toggle {
+  animation: spin 0.3s ease;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.accordion-collapse {
+  transition: height 0.5s ease-in-out;
+}
+
+.accordion-button:hover {
+  background-color: rgba(0, 123, 255, 0.1);
 }

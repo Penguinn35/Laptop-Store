@@ -92,6 +92,7 @@ CREATE TABLE faqs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     question TEXT NOT NULL,
     answer TEXT,
+    type ENUM('Câu hỏi chung', 'Shipping', 'Đặt hàng', 'Hỗ trợ kỹ thuật') DEFAULT 'Câu hỏi chung',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -102,4 +103,12 @@ CREATE TABLE settings (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE TABLE creators (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    role VARCHAR(100),
+    bio TEXT,
+    profile_image VARCHAR(255),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 

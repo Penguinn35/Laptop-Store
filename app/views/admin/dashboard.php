@@ -11,4 +11,8 @@
   <li><a href="/laptop_store/public/index.php?page=admin_news">Quản lý bài viết</a></li>
 
   <li><a href="/laptop_store/public/index.php?page=admin_orders">Quản lý đơn hàng</a></li>
+
+  <li><a href="/laptop_store/public/index.php?page=admin_faqs">Quản lý FAQ</a></li>
+
+  <li><a href="/laptop_store/public/index.php?page=admin_about">Chỉnh sửa trang Về Chúng Tôi</a></li>
 </ul>

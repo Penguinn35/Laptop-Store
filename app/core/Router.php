@@ -42,6 +42,42 @@ class Router
                 require_once "../app/controllers/AdminController.php";
                 (new AdminController())->settings();
                 break;
+            case 'admin_about':
+                require_once "../app/controllers/AdminController.php";
+                (new AdminController())->about();
+                break;
+            case 'admin_about_update':
+                require_once "../app/controllers/AdminController.php";
+                (new AdminController())->updateAbout();
+                break;
+            case 'admin_faqs':
+                require_once "../app/controllers/AdminController.php";
+                (new AdminController())->faqs();
+                break;
+            case 'faq_save':
+                require_once "../app/controllers/AdminController.php";
+                (new AdminController())->addFaq();
+                break;
+            case 'faq_delete':
+                require_once "../app/controllers/AdminController.php";
+                (new AdminController())->deleteFaq();
+                break;
+            case 'faq_update':
+                require_once "../app/controllers/AdminController.php";
+                (new AdminController())->updateFaq();
+                break;
+            case 'faq_addtype':
+                require_once "../app/controllers/AdminController.php";
+                (new AdminController())->addFaqType();
+                break;
+            case 'about':
+                require_once "../app/controllers/AboutController.php";
+                (new AboutController())->index();
+                break;
+            case 'faq':
+                require_once "../app/controllers/FAQController.php";
+                (new FAQController())->index();
+                break;
             default:
                 echo "404 - Page not found";
                 break;
