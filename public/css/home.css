@@ -1,0 +1,278 @@
+/* Hero section */
+.hero {
+  position: relative;
+  height: 100vh;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* object-position: right center; */
+}
+
+.hero-text-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: right;
+}
+
+.hero-text {
+  text-shadow: 0px 0px 12px rgba(0, 0, 0, 1);
+}
+
+.hero-text h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.btn {
+  background: #ffc107;
+  padding: 10px 20px;
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+
+/* feature  */
+.features {
+  padding: 50px 20px;
+  background: #f8f9fa;
+  text-align: center;
+
+}
+
+.features h1 {
+  font-size: 36px;
+  margin-bottom: 80px;
+  font-weight: 600;
+  color: #333;
+}
+
+.features-cards {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  height: 300px;
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  padding-bottom: 24px;
+}
+
+.feature-box h3 {
+  margin-bottom: 10px;
+  font-size: 28px;
+  color: #1f3156;
+  margin-bottom: 80px;
+}
+
+.feature-box p {
+  font-size: 24px;
+  color: #6e6e6e;
+  line-height: 1.4;
+}
+
+.feature-box i {
+  font-size: 60px;
+}
+
+.feature-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 794px) {
+  .features-cards {
+    gap: 15px;
+  }
+
+  .feature-box {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+
+/* Products */
+.products {
+  padding: 60px 20px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.products h1 {
+  font-size: 30px;
+  margin-bottom: 40px;
+  font-weight: 600;
+  color: #222;
+}
+
+.product-row {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.product-card {
+  width: 300px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.product-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.product-card .product-info {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 10px;
+}
+
+.product-card .product-info p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 5px 0;
+}
+
+.product-card .product-info i {
+  margin-right: 6px;
+  color: #363636;
+}
+
+.product-card h3 {
+  font-size: 18px;
+  padding: 15px 10px;
+  color: #333;
+}
+
+
+
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 640px) {
+  .product-card {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+/* button  */
+
+.cta {
+  display: flex;
+  padding: 11px 33px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  background: #ffffff;
+  transition: 1s;
+  box-shadow: 6px 6px 0 black;
+  transform: skewX(-15deg);
+  border: none;
+  cursor: pointer;
+  scale: 0.8;
+  margin-left: auto;
+}
+
+.cta:focus {
+  outline: none;
+}
+
+.cta:hover {
+  transition: 0.5s;
+  box-shadow: 10px 10px 0 #737373;
+}
+
+.cta .second {
+  transition: 0.5s;
+  margin-right: 0px;
+}
+
+.cta:hover .second {
+  transition: 0.5s;
+  margin-right: 45px;
+}
+
+.span {
+  transform: skewX(15deg);
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+
+.second {
+  width: 20px;
+  margin-left: 30px;
+  position: relative;
+  top: 12%;
+}
+
+.one {
+  transition: 0.4s;
+  transform: translateX(-60%);
+}
+
+.two {
+  transition: 0.5s;
+  transform: translateX(-30%);
+}
+
+.cta:hover .three {
+  animation: color_anim 1s infinite 0.2s;
+}
+
+.cta:hover .one {
+  transform: translateX(0%);
+  animation: color_anim 1s infinite 0.6s;
+}
+
+.cta:hover .two {
+  transform: translateX(0%);
+  animation: color_anim 1s infinite 0.4s;
+}
+
+@keyframes color_anim {
+  0% {
+    fill: white;
+  }
+
+  50% {
+    fill: #000000;
+  }
+
+  100% {
+    fill: white;
+  }
+}

@@ -2,6 +2,7 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   color: #222;
+  background-color: #FAFAFA;
 }
 
 /* Navbar */
@@ -46,22 +47,36 @@ position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background: #b36e6e;
+  height: 90px;
+  display: block;
+  background: transparent;
   z-index: 100;
+  margin: 10px 0px;
 }
 
 /* Desktop navbar */
 .navbar {
   width: 80%;
-  padding: 20px 10%;
+  padding: 20px 6%;
+  margin: 0px 4%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  /* background: #606060; */
+  /* From https://css.glass */
+  background: rgba(124, 124, 124, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10.5px);
+  -webkit-backdrop-filter: blur(10.5px);
+  border: 1px solid rgba(124, 124, 124, 0.39);
 }
 
 .logo {
   font-weight: bold;
-  color: black;
+  color: rgb(255, 255, 255);
+  font-size: larger;
   text-decoration: none;
 }
 
@@ -73,11 +88,44 @@ position: fixed;
 
 .nav-links li a {
   text-decoration: none;
-  color: #222;
+  color: #ffffff;
   font-weight: 500;
 }
 
 /* User buttons */
+.user{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 220px;
+}
+.userGrap{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 8px;
+}
+.userRound{
+  width: 36px;
+  height: 36px;
+  border: #ffffff 1px solid;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.userText{
+  color: white;
+  margin-left: 8px;
+  line-height: 0.6;
+}
+.fa-user{
+  color: white;
+}
 .btn-small {
   padding: 6px 14px;
   border-radius: 4px;
@@ -195,6 +243,7 @@ position: fixed;
   .navbar {
     width: 90%;
     padding: 20px 5%;
+    margin: 0px;
   }
 
   .user {
@@ -272,79 +321,8 @@ position: fixed;
   cursor: pointer;
 }
 
-/* Hero section */
-.hero {
-  position: relative;
-  height: 100vh;
-}
 
-.hero-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
-.hero-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  text-align: center;
-}
-
-.hero-text h1 {
-  font-size: 48px;
-  margin-bottom: 10px;
-}
-
-.btn {
-  background: #ffc107;
-  padding: 10px 20px;
-  color: #000;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 5px;
-}
-
-/* About */
-.about {
-  padding: 100px 50px;
-  background: #f8f9fa;
-}
-
-.about .container {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
-
-/* Products */
-.products {
-  padding: 80px 40px;
-  text-align: center;
-}
-
-.grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.grid .item {
-  width: 250px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #fff;
-}
-
-.grid .item img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
 
 /* Footer */
 footer {
@@ -352,4 +330,59 @@ footer {
   color: white;
   text-align: center;
   padding: 20px 0;
+}
+
+
+
+
+
+
+
+
+/* button  */
+/* From Uiverse.io by vinodjangid07 */ 
+.Btn {
+  width: 100px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(15, 15, 15);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.103);
+  position: relative;
+  overflow: hidden;
+  transition-duration: .3s;
+  text-decoration: none;
+}
+
+
+
+.Btn::before {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  content: "";
+  background-color: white;
+  border-radius: 50%;
+  left: -100%;
+  top: 0;
+  transition-duration: .3s;
+  mix-blend-mode: difference;
+}
+
+.Btn:hover::before {
+  transition-duration: .3s;
+  transform: translate(100%,-50%);
+  border-radius: 0;
+}
+
+.Btn:active {
+  transform: translate(5px,5px);
+  transition-duration: .3s;
 }
