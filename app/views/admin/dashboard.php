@@ -1,4 +1,5 @@
-<h1>Admin Dashboard</h1>
+<div class="adminDashboard">
+  <h1>Admin Dashboard</h1>
 <p>Welcome, <?= $_SESSION['user']['fullname'] ?>!</p>
 
 <ul>
@@ -16,3 +17,5 @@
 
   <li><a href="/laptop_store/public/index.php?page=admin_about">Chỉnh sửa trang Về Chúng Tôi</a></li>
 </ul>
+
+</div>

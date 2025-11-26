@@ -21,8 +21,9 @@ $user = $_SESSION['user'] ?? null;
     <!-- Nav links -->
     <ul class="nav-links" id="navLinks">
       <li><a href="/laptop_store/public/index.php?page=home">Trang chủ</a></li>
+      <li><a href="/laptop_store/public/index.php?page=review">Giới thiệu</a></li>
       <li><a href="/laptop_store/public/index.php?page=products">Sản phẩm</a></li>
-      <li><a href="/laptop_store/public/index.php?page=news">Tin tức</a></li>
+      <li><a href="/laptop_store/public/index.php?page=qna">hỏi đáp</a></li>
       <li><a href="/laptop_store/public/index.php?page=contact">Liên hệ</a></li>
       <li><a href="/laptop_store/public/index.php?page=about">Về chúng tôi</a></li>
       <li><a href="/laptop_store/public/index.php?page=faq">FAQ</a></li>
@@ -30,6 +31,8 @@ $user = $_SESSION['user'] ?? null;
         <?php if (!$isLoggedIn): ?>
           <button id="loginBtn_mobile" class="btn-small">Đăng nhập</button>
           <button id="registerBtn_mobile" class="btn-small">Đăng ký</button>
+
+
         <?php else: ?>
           <a href="profile.php">Thay đổi thông tin</a>
           <a href="/laptop_store/public/index.php?page=logout">Đăng xuất</a>
@@ -42,11 +45,20 @@ $user = $_SESSION['user'] ?? null;
     <div class="user">
       <?php if ($isLoggedIn): ?>
         <?php if ($user['role'] === 'admin'): ?>
-          <a href="/laptop_store/public/index.php?page=admin" class="btn-small admin-btn">Dashboard</a>
+          <a href="/laptop_store/public/index.php?page=admin" class="Btn">Dashboard</a>
         <?php endif; ?>
 
         <div class="user-menu">
-          <img src="/laptop_store/public/assets/user.png" alt="User" class="user-icon" id="userDropdown">
+
+          <div class="userGrap">
+            <div class="userRound">
+              <i class="fa-regular fa-user" id="userDropdown"></i>
+            </div>
+            <div class="userText">
+              <p>Welcome,</p>
+              <p> <?= $user['username'] ?></p>
+            </div>
+          </div>
           <div class="dropdown" id="dropdownMenu">
             <a href="profile.php">Thay đổi thông tin</a>
             <a href="/laptop_store/public/index.php?page=logout">Đăng xuất</a>
@@ -54,8 +66,10 @@ $user = $_SESSION['user'] ?? null;
         </div>
 
       <?php else: ?>
-        <button id="loginBtn" class="btn-small">Đăng nhập</button>
-        <button id="registerBtn" class="btn-small">Đăng ký</button>
+        <button id="loginBtn" class="Btn">Đăng nhập</button>
+        <button id="registerBtn" class="Btn">Đăng ký</button>
+
+
       <?php endif; ?>
 
     </div>

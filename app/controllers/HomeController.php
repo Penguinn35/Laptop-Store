@@ -13,9 +13,10 @@ class HomeController
         $settingModel = new Setting($db);
         $settings = $settingModel->all();
 
-        $view = "home.php";
+        $pageCss = "home";   
+        $pageJs  = "home";
         include "../app/views/layouts/header.php";
-        include "../app/views/$view";
+        include "../app/views/home.php";
         include "../app/views/layouts/footer.php";
     }
 }

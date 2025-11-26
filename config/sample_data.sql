@@ -17,9 +17,7 @@ INSERT INTO laptops (brand_id, name, description, cpu, ram, storage, gpu, screen
 
 -- Dữ liệu bảng users
 INSERT INTO users (username, password, fullname, email, role) VALUES
-('ad', '123456', 'Quản trị viên', 'admin@laptopstore.vn', 'admin'),
-('nguyenvana', '123456', 'Nguyễn Văn A', 'a@gmail.com', 'customer'),
-('lethib', '123456', 'Lê Thị B', 'b@gmail.com', 'customer');
+
 
 -- Dữ liệu bảng news
 INSERT INTO news (title, content, image) VALUES
@@ -55,14 +53,14 @@ INSERT INTO faqs (type, question, answer) VALUES
 
 -- Dữ liệu bảng settings
 INSERT INTO settings (`key`, `value`) VALUES
-('company_name', 'Laptop Store Việt Nam'),
-('company_address', '123 Nguyễn Văn Linh, Đà Nẵng'),
-('company_phone', '0123 456 789'),
-('company_email', 'contact@laptopstore.vn'),
+('home_banner','banner.jpg'),
+('home_intro_title','Hiệu năng mạnh mẽ, thiết kế hiện đại'),
+('home_intro_desc','Khám phá ngay bộ sưu tập laptop 2025'),
+('company_name','Laptop Store Việt Nam'),
+('company_address','123 Nguyễn Huệ, Quận 1, TP.HCM'),
+('company_phone','0123456789'),
+('company_email','contact@laptopstore.vn')
 ('company_logo', 'logo.png'),
-('home_banner', 'banner.jpg'),
-('home_intro_title', 'Chào mừng đến với Laptop Store'),
-('home_intro_desc', 'Cung cấp laptop chất lượng cao với giá tốt nhất.');
 ('about_title', 'Về Chúng Tôi'),
 ('about_subtitle', 'Khám phá câu chuyện và giá trị cốt lõi của Laptop Store Việt Nam'),
 ('about_mission', 'Tại Laptop Store Việt Nam, sứ mệnh của chúng tôi là cung cấp những sản phẩm laptop chất lượng cao với giá cả hợp lý, đồng thời mang đến dịch vụ khách hàng xuất sắc. Chúng tôi cam kết không ngừng cải tiến và đổi mới để đáp ứng nhu cầu ngày càng cao của khách hàng.<br><br>Chúng tôi tin rằng công nghệ có thể thay đổi cuộc sống và chúng tôi muốn là cầu nối giúp khách hàng tiếp cận với những sản phẩm tốt nhất trên thị trường. Sự hài lòng của khách hàng luôn là ưu tiên hàng đầu của chúng tôi.'),

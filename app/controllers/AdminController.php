@@ -25,7 +25,6 @@ class AdminController
 
         include "../app/views/layouts/header.php";
         include "../app/views/admin/dashboard.php";
-        include "../app/views/layouts/footer.php";
     }
     public function contacts()
     {
@@ -51,7 +50,6 @@ class AdminController
 
         include "../app/views/layouts/header.php";
         include "../app/views/admin/contacts.php";
-        include "../app/views/layouts/footer.php";
     }
 
     public function markContact()
@@ -93,7 +91,6 @@ class AdminController
 
         include "../app/views/layouts/header.php";
         include "../app/views/admin/settings.php";
-        include "../app/views/layouts/footer.php";
     }
 
     public function saveSettings()
