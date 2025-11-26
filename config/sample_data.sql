@@ -17,9 +17,7 @@ INSERT INTO laptops (brand_id, name, description, cpu, ram, storage, gpu, screen
 
 -- Dữ liệu bảng users
 INSERT INTO users (username, password, fullname, email, role) VALUES
-('ad', '123456', 'Quản trị viên', 'admin@laptopstore.vn', 'admin'),
-('nguyenvana', '123456', 'Nguyễn Văn A', 'a@gmail.com', 'customer'),
-('lethib', '123456', 'Lê Thị B', 'b@gmail.com', 'customer');
+
 
 -- Dữ liệu bảng news
 INSERT INTO news (title, content, image) VALUES
@@ -43,9 +41,11 @@ INSERT INTO faqs (question, answer) VALUES
 ('Có hỗ trợ giao hàng toàn quốc không?', 'Chúng tôi giao hàng toàn quốc qua các đối tác uy tín.');
 
 -- Dữ liệu bảng settings
-INSERT INTO settings (`key`, `value`) VALUES
-('company_name', 'Laptop Store Việt Nam'),
-('address', '123 Nguyễn Văn Linh, Đà Nẵng'),
-('phone', '0123 456 789'),
-('email', 'contact@laptopstore.vn'),
-('logo', 'logo.png');
+INSERT INTO settings (`key`,`value`) VALUES
+('home_banner','banner.jpg'),
+('home_intro_title','Hiệu năng mạnh mẽ, thiết kế hiện đại'),
+('home_intro_desc','Khám phá ngay bộ sưu tập laptop 2025'),
+('company_name','Laptop Store Việt Nam'),
+('company_address','123 Nguyễn Huệ, Quận 1, TP.HCM'),
+('company_phone','0123456789'),
+('company_email','contact@laptopstore.vn')

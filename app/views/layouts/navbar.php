@@ -23,7 +23,6 @@ $user = $_SESSION['user'] ?? null;
       <li><a href="/laptop_store/public/index.php?page=home">Trang chủ</a></li>
       <li><a href="/laptop_store/public/index.php?page=review">Giới thiệu</a></li>
       <li><a href="/laptop_store/public/index.php?page=products">Sản phẩm</a></li>
-      <li><a href="/laptop_store/public/index.php?page=home">Trang chủ</a></li>
       <li><a href="/laptop_store/public/index.php?page=qna">hỏi đáp</a></li>
       <li><a href="/laptop_store/public/index.php?page=contact">Liên hệ</a></li>
       <li class="mobile-user">
@@ -48,7 +47,16 @@ $user = $_SESSION['user'] ?? null;
         <?php endif; ?>
 
         <div class="user-menu">
-          <img src="/laptop_store/public/assets/user.png" alt="User" class="user-icon" id="userDropdown">
+
+          <div class="userGrap">
+            <div class="userRound">
+              <i class="fa-regular fa-user" id="userDropdown"></i>
+            </div>
+            <div class="userText">
+              <p>Welcome,</p>
+              <p> <?= $user['username'] ?></p>
+            </div>
+          </div>
           <div class="dropdown" id="dropdownMenu">
             <a href="profile.php">Thay đổi thông tin</a>
             <a href="/laptop_store/public/index.php?page=logout">Đăng xuất</a>

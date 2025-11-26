@@ -2,6 +2,7 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   color: #222;
+  background-color: #FAFAFA;
 }
 
 /* Navbar */
@@ -95,8 +96,35 @@ position: fixed;
 .user{
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
   gap: 8px;
   min-width: 220px;
+}
+.userGrap{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 8px;
+}
+.userRound{
+  width: 36px;
+  height: 36px;
+  border: #ffffff 1px solid;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.userText{
+  color: white;
+  margin-left: 8px;
+  line-height: 0.6;
+}
+.fa-user{
+  color: white;
 }
 .btn-small {
   padding: 6px 14px;
