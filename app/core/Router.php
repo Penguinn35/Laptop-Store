@@ -45,6 +45,59 @@ class Router
             default:
                 echo "404 - Page not found";
                 break;
+            case 'products':
+                require_once "../app/controllers/ProductController.php";
+                (new ProductController())->index();
+                break;
+
+            case 'product_detail':
+                require_once "../app/controllers/ProductController.php";
+                (new ProductController())->detail();
+                break;
+
+            case 'cart':
+                require_once "../app/controllers/ProductController.php";
+                (new ProductController())->cart();
+                break;
+           
+            case 'cart_add':
+                require_once "../app/controllers/ProductController.php";
+                (new ProductController())->addToCart();
+                break;
+
+            case 'checkout':
+                require_once "../app/controllers/ProductController.php";
+                (new ProductController())->checkout();
+                break;    
+
+            // Admin quản lý sản phẩm
+            case 'admin_products':
+                require_once "../app/controllers/AdminProductController.php";
+                (new AdminProductController())->index();
+                break;
+            case 'admin_product_create':
+                require_once "../app/controllers/AdminProductController.php";
+                (new AdminProductController())->create();
+                break;
+            case 'admin_product_edit':
+                require_once "../app/controllers/AdminProductController.php";
+                (new AdminProductController())->edit();
+                break;
+            case 'admin_product_delete':
+                require_once "../app/controllers/AdminProductController.php";
+                (new AdminProductController())->delete();
+                break;
+
+            // Admin quản lý đơn hàng
+            case 'admin_orders':
+                require_once "../app/controllers/AdminOrderController.php";
+                (new AdminOrderController())->index();
+                break;
+            case 'admin_order_view':
+                require_once "../app/controllers/AdminOrderController.php";
+                (new AdminOrderController())->view();
+                break;
+
         }
     }
 }

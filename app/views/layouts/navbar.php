@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $isLoggedIn = isset($_SESSION['user']);
 $user = $_SESSION['user'] ?? null;
 ?>
@@ -11,7 +13,7 @@ $user = $_SESSION['user'] ?? null;
   <nav class="navbar">
 
     <!-- Logo -->
-    <a class="logo" href="/laptop_store/public/index.php?page=home">LaptopStore</a>
+    <a class="logo" href="index.php?page=home">LaptopStore</a>
 
     <!-- Hamburger icon (mobile only) -->
     <div class="hamburger" id="hamburgerBtn">
@@ -20,17 +22,17 @@ $user = $_SESSION['user'] ?? null;
 
     <!-- Nav links -->
     <ul class="nav-links" id="navLinks">
-      <li><a href="/laptop_store/public/index.php?page=home">Trang chủ</a></li>
-      <li><a href="/laptop_store/public/index.php?page=products">Sản phẩm</a></li>
-      <li><a href="/laptop_store/public/index.php?page=news">Tin tức</a></li>
-      <li><a href="/laptop_store/public/index.php?page=contact">Liên hệ</a></li>
+      <li><a href="index.php?page=home">Trang chủ</a></li>
+      <li><a href="index.php?page=products">Sản phẩm</a></li>
+      <li><a href="index.php?page=news">Tin tức</a></li>
+      <li><a href="index.php?page=contact">Liên hệ</a></li>
       <li class="mobile-user">
         <?php if (!$isLoggedIn): ?>
           <button id="loginBtn_mobile" class="btn-small">Đăng nhập</button>
           <button id="registerBtn_mobile" class="btn-small">Đăng ký</button>
         <?php else: ?>
           <a href="profile.php">Thay đổi thông tin</a>
-          <a href="/laptop_store/public/index.php?page=logout">Đăng xuất</a>
+          <a href="index.php?page=logout">Đăng xuất</a>
         <?php endif; ?>
       </li>
     </ul>
@@ -40,14 +42,14 @@ $user = $_SESSION['user'] ?? null;
     <div class="user">
       <?php if ($isLoggedIn): ?>
         <?php if ($user['role'] === 'admin'): ?>
-          <a href="/laptop_store/public/index.php?page=admin" class="btn-small admin-btn">Dashboard</a>
+          <a href="index.php?page=admin" class="btn-small admin-btn">Dashboard</a>
         <?php endif; ?>
 
         <div class="user-menu">
-          <img src="/laptop_store/public/assets/user.png" alt="User" class="user-icon" id="userDropdown">
+          <img src="assets/user.png" alt="User" class="user-icon" id="userDropdown">
           <div class="dropdown" id="dropdownMenu">
             <a href="profile.php">Thay đổi thông tin</a>
-            <a href="/laptop_store/public/index.php?page=logout">Đăng xuất</a>
+            <a href="index.php?page=logout">Đăng xuất</a>
           </div>
         </div>
 
@@ -77,7 +79,7 @@ $user = $_SESSION['user'] ?? null;
 
 
   $("#loginBtn").on("click", () => {
-    $.get("/laptop_store/public/api/auth/login_form.php", html => {
+    $.get("api/auth/login_form.php", html => {
       popupContent.html(html);
       overlay.addClass("show");
 
@@ -86,7 +88,7 @@ $user = $_SESSION['user'] ?? null;
         console.log("in");
 
         e.preventDefault();
-        $.post("/laptop_store/public/api/auth/login_action.php",
+        $.post("api/auth/login_action.php",
           $("#loginForm").serialize(),
           res => {
             if (res.status === "ok" | res.status === "admin") {
@@ -107,14 +109,14 @@ $user = $_SESSION['user'] ?? null;
 
 
   $("#registerBtn").on("click", () => {
-    $.get("/laptop_store/public/api/auth/register_form.php", html => {
+    $.get("api/auth/register_form.php", html => {
       popupContent.html(html);
       overlay.addClass("show");
     });
   });
 
   $("#loginBtn_mobile").on("click", () => {
-    $.get("/laptop_store/public/api/auth/login_form.php", html => {
+    $.get("api/auth/login_form.php", html => {
       popupContent.html(html);
       overlay.addClass("show");
 
@@ -123,7 +125,7 @@ $user = $_SESSION['user'] ?? null;
         console.log("in");
 
         e.preventDefault();
-        $.post("/laptop_store/public/api/auth/login_action.php",
+        $.post("api/auth/login_action.php",
           $("#loginForm").serialize(),
           res => {
             if (res.status === "ok") {
@@ -139,7 +141,7 @@ $user = $_SESSION['user'] ?? null;
   });
 
   $("#registerBtn_mobile").on("click", () => {
-    $.get("/laptop_store/public/api/auth/register_form.php", html => {
+    $.get("api/auth/register_form.php", html => {
       popupContent.html(html);
       overlay.addClass("show");
     });

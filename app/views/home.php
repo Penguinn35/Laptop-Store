@@ -1,10 +1,10 @@
 <section class="hero">
-  <img src="/laptop_store/public/images/<?= $settings['home_banner'] ?>" class="hero-img">
+  <img src="images/banner.jpg" class="hero-img">
 
   <div class="hero-text">
     <h1><?= $settings['home_intro_title'] ?></h1>
     <p><?= $settings['home_intro_desc'] ?></p>
-    <a href="/laptop_store/public/index.php?page=products" class="btn">Xem sản phẩm</a>
+    <a href="index.php?page=products" class="btn">Xem sản phẩm</a>
   </div>
 </section>
 
