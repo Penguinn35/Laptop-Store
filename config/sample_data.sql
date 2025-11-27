@@ -59,7 +59,7 @@ INSERT INTO settings (`key`, `value`) VALUES
 ('company_name','Laptop Store Việt Nam'),
 ('company_address','123 Nguyễn Huệ, Quận 1, TP.HCM'),
 ('company_phone','0123456789'),
-('company_email','contact@laptopstore.vn')
+('company_email','contact@laptopstore.vn'),
 ('company_logo', 'logo.png'),
 ('about_title', 'Về Chúng Tôi'),
 ('about_subtitle', 'Khám phá câu chuyện và giá trị cốt lõi của Laptop Store Việt Nam'),

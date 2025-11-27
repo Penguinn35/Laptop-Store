@@ -2,13 +2,46 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   color: #222;
-  padding-top: var(--navbar-height, 72px);
   background-color: #FAFAFA;
 }
-:root {
-  --navbar-height: 72px; /* adjust as needed to match actual navbar height */
+
+/* Navbar */
+/* .navbar-grap {
+  min-width: 100%;
+  height: 20px;
+  display: flex;
+  z-index: 2;
+position: fixed;
+  top: 0;
+  left: 0;
 }
-/* Navbar wrapper (fixed) */
+
+.navbar {
+  width: 100%;
+  padding: 40px 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+
+.user {}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0px auto;
+}
+
+
+.logo {
+  color: black;
+
+} */
+
+/* Wrapper (fixed) */
 .navbar-wrap {
   position: fixed;
   top: 0;
@@ -18,17 +51,12 @@ body {
   display: block;
   background: transparent;
   z-index: 100;
-  height: var(--navbar-height);
   margin: 10px 0px;
 }
 
-.site-navbar {
+/* Desktop navbar */
+.navbar {
   width: 80%;
-  padding: 0px 10%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
   padding: 20px 6%;
   margin: 0px 4%;
   display: flex;
@@ -107,10 +135,15 @@ body {
   cursor: pointer;
 }
 
-.btn-small:hover { background: #005fcc; }
+.btn-small:hover {
+  background: #005fcc;
+}
 
 /* Better user menu UX */
-.user-menu { position: relative; }
+.user-menu {
+  position: relative;
+}
+
 .user-icon {
   width: 32px;
   height: 32px;
@@ -118,9 +151,12 @@ body {
   border-radius: 50%;
   transition: 0.2s;
 }
-.user-icon:hover { opacity: 0.7; }
 
-.dropdown { /* kept visible rules */
+.user-icon:hover {
+  opacity: 0.7;
+}
+
+.dropdown {
   position: absolute;
   top: 40px;
   right: 0;
@@ -347,60 +383,6 @@ body {
 
 
 
-.hero-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  text-align: center;
-}
-
-.hero-text h1 {
-  font-size: 48px;
-  margin-bottom: 10px;
-}
-
-.btn {
-  background: #ffc107;
-  padding: 10px 10px;
-  color: #000;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 5px;
-  margin: 0;
-}
-
-.btn > svg.icon {
-  margin: 0;
-}
-
-/* Products */
-.products {
-  padding: 80px 40px;
-  text-align: center;
-}
-
-.grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.grid .item {
-  width: 250px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #fff;
-}
-
-.grid .item img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
 
 /* Footer */
 footer {
@@ -410,6 +392,60 @@ footer {
   padding: 20px 0;
 }
 
+
+
+
+
+
+
+
+/* button  */
+/* From Uiverse.io by vinodjangid07 */ 
+.Btn {
+  width: 100px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(15, 15, 15);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.103);
+  position: relative;
+  overflow: hidden;
+  transition-duration: .3s;
+  text-decoration: none;
+}
+
+
+
+.Btn::before {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  content: "";
+  background-color: white;
+  border-radius: 50%;
+  left: -100%;
+  top: 0;
+  transition-duration: .3s;
+  mix-blend-mode: difference;
+}
+
+.Btn:hover::before {
+  transition-duration: .3s;
+  transform: translate(100%,-50%);
+  border-radius: 0;
+}
+
+.Btn:active {
+  transform: translate(5px,5px);
+  transition-duration: .3s;
+}
 /* FAQ */
 
 .faq-page-header {
@@ -479,50 +515,4 @@ footer {
 
 .accordion-button:hover {
   background-color: rgba(0, 123, 255, 0.1);
-}
-
-/* button  */
-/* From Uiverse.io by vinodjangid07 */ 
-.Btn {
-  width: 100px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(15, 15, 15);
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-weight: 600;
-  gap: 8px;
-  cursor: pointer;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.103);
-  position: relative;
-  overflow: hidden;
-  transition-duration: .3s;
-  text-decoration: none;
-}
-
-.Btn::before {
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  content: "";
-  background-color: white;
-  border-radius: 50%;
-  left: -100%;
-  top: 0;
-  transition-duration: .3s;
-  mix-blend-mode: difference;
-}
-
-.Btn:hover::before {
-  transition-duration: .3s;
-  transform: translate(100%,-50%);
-  border-radius: 0;
-}
-
-.Btn:active {
-  transform: translate(5px,5px);
-  transition-duration: .3s;
 }

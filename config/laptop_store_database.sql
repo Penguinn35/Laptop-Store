@@ -110,5 +110,14 @@ CREATE TABLE creators (
     bio TEXT,
     profile_image VARCHAR(255),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE creators (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    role VARCHAR(100),
+    bio TEXT,
+    profile_image VARCHAR(255),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
