@@ -1,0 +1,99 @@
+.about-container {
+  width: 92%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-hero {
+  position: relative;
+  min-height: 50vh;
+  color: #fff;
+}
+.about-hero .card-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  position: relative;
+  text-align: center;
+  padding: 0; /* already p-0 in markup */
+}
+.about-hero .card-body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+.about-hero .hero-content {
+  position: relative;
+  padding: 24px 32px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.btn {
+    padding: 5px 5px;
+}
+
+.btn > svg.icon {
+  margin: 0;
+}
+
+.about-page-creators { padding: 10px 0 10px 0; }
+.about-page-creators .card-title { margin-bottom: 15px; font-size: 24px; font-weight: bold; text-align: center; }
+.creators-grid { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+.creator-card { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); width: 220px; text-align: center; padding: 20px; }
+.creator-card img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; }
+.creator-card h3 { margin: 10px 0 5px 0; }
+.creator-card p.role { font-style: italic; color: #555; margin-bottom: 10px; }
+.creator-card p.bio { font-size: 14px; color: #666; }
+
+.about-page-mission { padding: 0; }
+.about-page-mission .mission-content { max-width: 800px; margin: 0 auto; text-align: left; }
+.about-card { height: 100%; }
+.about-card .card-body { display: flex; flex-direction: column; }
+.about-card .card-title { margin-bottom: 15px; font-size: 24px; font-weight: bold; }
+.about-card .card-text { font-size: 16px; line-height: 1.6; padding-top: 16px; padding-bottom: 16px;}
+
+.about-page-values { padding: 0; background: #f9f9f9; }
+.about-page-values .values-content { max-width: 800px; margin: 0 auto; text-align: left; }
+.about-values-list li { font-size: 16px; line-height: 1.5; color: #555; }
+
+.about-page-contact { padding: 40px 0; }
+.about-page-contact .contact-content { max-width: 600px; margin: 0 auto; text-align: center; }
+.about-page-contact .contact-content h2 { margin-bottom: 20px; }
+.about-page-contact .contact-content p { font-size: 16px; color: #444; margin-bottom: 10px; }
+.about-page-contact .contact-content a { color: #007bff; text-decoration: none; }
+.about-page-contact .contact-content a:hover { text-decoration: underline; }
+
+.navbar {
+  margin-left: 4%;
+  margin-right: 4%;
+  box-sizing: content-box;
+  position: static;
+  height: 67.2px;
+  font-size: 16px;
+}
+
+.logo {
+  font-size: larger;
+}
+
+.nav-links {
+  margin-bottom: 0;
+}
+
+.userText {
+  p {
+    margin-top: 16px;
+  }
+}
+
+.userRound {
+  width: 38px;
+  height: 38px;
+}
+
+.page {
+  margin-top: 100px;
+}

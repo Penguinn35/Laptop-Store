@@ -113,6 +113,8 @@ class AdminController
         $creatorModel = new Creator($this->db);
         $creators     = $creatorModel->all();
 
+        $useTabler = true;
+        $pageCss = "about";
         include "../app/views/layouts/header.php";
         include "../app/views/admin/about.php";
         include "../app/views/layouts/footer.php";
@@ -173,12 +175,15 @@ class AdminController
         Auth::requireAdmin();
         $faqModel = new FAQ($this->db);
         $faqs     = $faqModel->all();
+        $settings = (new Setting($this->db))->all();
 
         $result = $this->db->query("SHOW COLUMNS FROM faqs WHERE Field = 'type'");
         $col    = $result->fetch_assoc();
         preg_match('/enum\((.*)\)/', $col['Type'], $m);
         $types = isset($m[1]) ? array_map(fn($v) => trim($v, "'"), explode(',', $m[1])) : [];
 
+        $useTabler = true;
+        $pageCss = "faq";
         include "../app/views/layouts/header.php";
         include "../app/views/admin/faqs.php";
         include "../app/views/layouts/footer.php";

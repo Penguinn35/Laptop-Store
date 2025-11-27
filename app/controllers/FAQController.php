@@ -15,6 +15,8 @@ class FAQController
         $faqModel = new FAQ($db);
         $faqs = $faqModel->all();
 
+        $useTabler = true;
+        $pageCss = "faq";
         $view = "faq.php";
         include "../app/views/layouts/header.php";
         include "../app/views/$view";

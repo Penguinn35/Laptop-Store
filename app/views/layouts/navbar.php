@@ -8,7 +8,7 @@ $user = $_SESSION['user'] ?? null;
 <!-- NAVBAR -->
 
 <div class="navbar-wrap">
-  <nav class="site-navbar">
+  <nav class="navbar">
 
     <!-- Logo -->
     <a class="logo" href="/laptop_store/public/index.php?page=home">LaptopStore</a>
@@ -23,10 +23,9 @@ $user = $_SESSION['user'] ?? null;
       <li><a href="/laptop_store/public/index.php?page=home">Trang chủ</a></li>
       <li><a href="/laptop_store/public/index.php?page=review">Giới thiệu</a></li>
       <li><a href="/laptop_store/public/index.php?page=products">Sản phẩm</a></li>
-      <li><a href="/laptop_store/public/index.php?page=qna">hỏi đáp</a></li>
       <li><a href="/laptop_store/public/index.php?page=contact">Liên hệ</a></li>
-      <li><a href="/laptop_store/public/index.php?page=about">Về chúng tôi</a></li>
       <li><a href="/laptop_store/public/index.php?page=faq">FAQ</a></li>
+      <li><a href="/laptop_store/public/index.php?page=about">Về chúng tôi</a></li>
       <li class="mobile-user">
         <?php if (!$isLoggedIn): ?>
           <button id="loginBtn_mobile" class="btn-small">Đăng nhập</button>
@@ -172,7 +171,7 @@ $user = $_SESSION['user'] ?? null;
   });
 
   window.addEventListener("click", (e) => {
-    if (!e.target.closest(".site-navbar")) {
+    if (!e.target.closest(".navbar")) {
       document.getElementById("navLinks").classList.remove("show");
     }
   });

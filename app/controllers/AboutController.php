@@ -16,6 +16,8 @@ class AboutController
         $creatorModel = new Creator($db);
         $creators = $creatorModel->all();
 
+        $useTabler = true;
+        $pageCss = "about";
         $view = "about.php";
         include "../app/views/layouts/header.php";
         include "../app/views/$view";
