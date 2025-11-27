@@ -263,13 +263,16 @@ class AdminController
 if (!function_exists('normalizeListGroupHtml_helper')) {
     function normalizeListGroupHtml_helper($htmlFragment)
     {
+        if (empty($htmlFragment)) return $htmlFragment;
         libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $doc->loadHTML('<?xml encoding="utf-8" ?>' . $htmlFragment, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        $loaded = $doc->loadHTML('<?xml encoding="UTF-8"?><div>' . $htmlFragment . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        if (!$loaded) return $htmlFragment;
+        $doc->encoding = 'UTF-8';
 
         foreach (['ul', 'ol'] as $tag) {
             $nodes = $doc->getElementsByTagName($tag);
-            for ($i = 0; $i < $nodes->length; $i++) {
+            for ($i = $nodes->length - 1; $i >= 0; $i--) {
                 $n = $nodes->item($i);
                 $existing = $n->getAttribute('class');
                 $classes = array_filter(array_map('trim', explode(' ', $existing)));
@@ -280,7 +283,7 @@ if (!function_exists('normalizeListGroupHtml_helper')) {
         }
 
         $lis = $doc->getElementsByTagName('li');
-        for ($i = 0; $i < $lis->length; $i++) {
+        for ($i = $lis->length - 1; $i >= 0; $i--) {
             $li = $lis->item($i);
             $existing = $li->getAttribute('class');
             $classes = array_filter(array_map('trim', explode(' ', $existing)));
@@ -288,11 +291,14 @@ if (!function_exists('normalizeListGroupHtml_helper')) {
             $li->setAttribute('class', implode(' ', $classes));
         }
 
-        $body = $doc->getElementsByTagName('body')->item(0);
-        $out = '';
-        foreach ($body->childNodes as $child) {
-            $out .= $doc->saveHTML($child);
+        $div = $doc->getElementsByTagName('div')->item(0);
+        if ($div) {
+            $out = '';
+            foreach ($div->childNodes as $child) {
+                $out .= $doc->saveHTML($child);
+            }
+            return $out;
         }
-        return $out;
+        return $htmlFragment;
     }
 }

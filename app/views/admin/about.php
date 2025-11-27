@@ -101,7 +101,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
       <form action="?page=admin_about_update" method="post">
         <div class="modal-body">
-          <div class="mb-3"><label class="form-label">Nội dung sứ mệnh</label><textarea name="about_mission" class="form-control summernote" required><?= htmlspecialchars($settings['about_mission'] ?? '') ?></textarea></div>
+          <div class="mb-3"><label class="form-label">Nội dung sứ mệnh</label><textarea name="about_mission" class="form-control summernote" required><?= html_entity_decode($settings['about_mission'] ?? '') ?></textarea></div>
         </div>
         <div class="modal-footer"><button type="button" class="btn me-auto" data-bs-dismiss="modal">Đóng</button><button type="submit" class="btn btn-primary">Lưu</button></div>
       </form>
@@ -115,7 +115,7 @@
       <div class="modal-header"><h5 class="modal-title">Chỉnh sửa giá trị</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
       <form action="?page=admin_about_update" method="post">
         <div class="modal-body">
-          <div class="mb-3"><label class="form-label">Danh sách giá trị (HTML)</label><textarea name="about_values" class="form-control summernote" required><?= htmlspecialchars($settings['about_values'] ?? '') ?></textarea></div>
+          <div class="mb-3"><label class="form-label">Danh sách giá trị (HTML)</label><textarea name="about_values" class="form-control summernote" required><?= html_entity_decode($settings['about_values'] ?? '') ?></textarea></div>
         </div>
         <div class="modal-footer"><button type="button" class="btn me-auto" data-bs-dismiss="modal">Đóng</button><button type="submit" class="btn btn-primary">Lưu</button></div>
       </form>
@@ -150,7 +150,7 @@ $(document).ready(function(){
     height: 180,
     toolbar: [
       ['style', ['bold','italic','underline','clear']],
-      ['insert', ['link','picture']],
+      ['font', ['strikethrough','superscript','subscript']],
       ['view', ['codeview']]
     ],
     dialogsInBody: true,
@@ -165,6 +165,11 @@ $(document).ready(function(){
     if ($('.modal.show').length) {
       $('body').addClass('modal-open');
     }
+  });
+
+  // Fix z-index for Summernote popovers/dropdowns
+  $(document).on('shown.bs.modal', function(){
+    $('.note-popover').css('z-index', 1063);
   });
 
   $('#editValuesModal form').on('submit', function(){
