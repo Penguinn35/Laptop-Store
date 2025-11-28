@@ -10,6 +10,7 @@ CREATE TABLE users (
     email VARCHAR(100),
     phone VARCHAR(20),
     address VARCHAR(255),
+    avatar VARCHAR(255),
     role ENUM('admin','customer') DEFAULT 'customer',
     status TINYINT(1) DEFAULT 1,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP

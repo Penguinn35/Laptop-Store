@@ -42,6 +42,14 @@ class Router
                 require_once "../app/controllers/AdminController.php";
                 (new AdminController())->settings();
                 break;
+            case 'profile':
+                require_once "../app/controllers/ProfileController.php";
+                (new ProfileController())->profile();
+                break;
+            case 'profile_update':
+                require_once "../app/controllers/ProfileController.php";
+                (new ProfileController())->updateProfile();
+                break;
             case 'admin_about':
                 require_once "../app/controllers/AdminController.php";
                 (new AdminController())->about();

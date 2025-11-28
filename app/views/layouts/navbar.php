@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 $isLoggedIn = isset($_SESSION['user']);
 $user = $_SESSION['user'] ?? null;
 ?>
@@ -50,16 +52,24 @@ $user = $_SESSION['user'] ?? null;
         <div class="user-menu">
 
           <div class="userGrap">
-            <div class="userRound">
-              <i class="fa-regular fa-user" id="userDropdown"></i>
-            </div>
+            <?php
+              $avatar = $user['avatar'] ?? '';
+              $avatarUrl = $avatar ? "/laptop_store/public/avatars/" . htmlspecialchars($avatar) : '';
+            ?>
+            <?php if ($avatarUrl): ?>
+              <img src="<?= $avatarUrl ?>" alt="Avatar" id="userDropdown" class="rounded-circle" style="width:36px;height:36px;object-fit:cover;">
+            <?php else: ?>
+              <div class="userRound">
+                <i class="fa-regular fa-user" id="userDropdown"></i>
+              </div>
+            <?php endif; ?>
             <div class="userText">
               <p>Welcome,</p>
-              <p> <?= $user['username'] ?></p>
+              <p> <?= htmlspecialchars($user['username']) ?></p>
             </div>
           </div>
           <div class="dropdown" id="dropdownMenu">
-            <a href="profile.php">Thay đổi thông tin</a>
+            <a href="/laptop_store/public/index.php?page=profile">Thay đổi thông tin</a>
             <a href="/laptop_store/public/index.php?page=logout">Đăng xuất</a>
           </div>
         </div>

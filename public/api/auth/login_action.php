@@ -1,6 +1,8 @@
 <?php
 header('Content-Type: application/json; charset=UTF-8');
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 require_once __DIR__ . '/../../../app/core/Database.php';
 require_once __DIR__ . '/../../../app/models/User.php';
 $db = (new Database())->getConnection();
@@ -27,11 +29,16 @@ if (!password_verify($password, $user['password'])) {
   exit;
 }
 
+// Store full user info into session for profile display
 $_SESSION['user'] = [
   'id' => $user['id'],
   'username' => $user['username'],
-  'fullname' => $user['fullname'],
-  'role' => $user['role']
+  'fullname' => $user['fullname'] ?? '',
+  'email' => $user['email'] ?? '',
+  'phone' => $user['phone'] ?? '',
+  'address' => $user['address'] ?? '',
+  'role' => $user['role'] ?? '',
+  'avatar' => $user['avatar'] ?? ''
 ];
 if ($user['role'] === 'admin') {
   echo json_encode(['status' => 'admin']);
