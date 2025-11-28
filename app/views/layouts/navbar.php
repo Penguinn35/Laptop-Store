@@ -25,6 +25,7 @@ $user = $_SESSION['user'] ?? null;
       <li><a href="/laptop_store/public/index.php?page=home">Trang chủ</a></li>
       <li><a href="/laptop_store/public/index.php?page=products">Sản phẩm</a></li>
       <li><a href="/laptop_store/public/index.php?page=news">Tin tức</a></li>
+      <li><a href="/laptop_store/public/index.php?page=qna">hỏi đáp</a></li>
       <li><a href="/laptop_store/public/index.php?page=contact">Liên hệ</a></li>
       <li class="mobile-user">
         <?php if (!$isLoggedIn): ?>
