@@ -386,3 +386,7 @@ footer {
   transform: translate(5px,5px);
   transition-duration: .3s;
 }
+
+.rounded-circle {
+  border-radius: 50%;
+}

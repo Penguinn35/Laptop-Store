@@ -1,0 +1,109 @@
+.spacing{
+  margin-top: 100px;
+}
+.faq-container {
+  width: 92%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.faq-page-header {
+  margin-bottom: 40px;
+}
+
+.faq-page-title {
+  margin-top: 10px;
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.hr-text::before,
+.hr-text::after {
+  content: "";
+  flex: 1;
+  border-bottom: 5px solid rgba(0, 123, 255, 0.5);
+}
+.hr-text {
+  font-weight: bold;
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-top: 20px;
+}
+
+.accordion {
+  border-radius: 0;
+  margin-top: 40px;
+  overflow: hidden;
+}
+
+.accordion-item {
+  border: none;
+  border-bottom: 1px solid rgba(0, 123, 255);
+  border-radius: 0 !important;
+}
+
+.accordion-button {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.accordion-button-toggle {
+  flex-shrink: 0;
+  margin-left: 0;
+}
+
+.accordion-button:active .accordion-button-toggle {
+  animation: spin 0.3s ease;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(180deg); }
+}
+
+.accordion-collapse {
+  transition: height 0.5s ease-in-out;
+}
+
+.accordion-button:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.navbar {
+  margin-left: 4%;
+  margin-right: 4%;
+  box-sizing: content-box;
+  position: static;
+  height: 67.2px;
+  font-size: 16px;
+}
+
+.logo {
+  font-size: larger;
+}
+
+.nav-links {
+  margin-bottom: 0;
+}
+
+.userText {
+  p {
+    margin-top: 16px;
+  }
+}
+
+.userRound {
+  width: 38px;
+  height: 38px;
+}
+
+.page {
+  margin-top: 120px;
+}

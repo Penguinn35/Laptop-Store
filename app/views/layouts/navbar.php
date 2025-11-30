@@ -1,6 +1,6 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+  session_start();
 }
 $isLoggedIn = isset($_SESSION['user']);
 $user = $_SESSION['user'] ?? null;
@@ -24,8 +24,9 @@ $user = $_SESSION['user'] ?? null;
     <ul class="nav-links" id="navLinks">
       <li><a href="/laptop_store/public/index.php?page=home">Trang chủ</a></li>
       <li><a href="/laptop_store/public/index.php?page=products">Sản phẩm</a></li>
-      <li><a href="/laptop_store/public/index.php?page=news">Tin tức</a></li>
       <li><a href="/laptop_store/public/index.php?page=contact">Liên hệ</a></li>
+      <li><a href="/laptop_store/public/index.php?page=faq">FAQ</a></li>
+      <li><a href="/laptop_store/public/index.php?page=about">Về chúng tôi</a></li>
       <li class="mobile-user">
         <?php if (!$isLoggedIn): ?>
           <button id="loginBtn_mobile" class="btn-small">Đăng nhập</button>
@@ -48,10 +49,27 @@ $user = $_SESSION['user'] ?? null;
         <?php endif; ?>
 
         <div class="user-menu">
-          <img src="/laptop_store/public/assets/user.png" alt="User" class="user-icon" id="userDropdown">
+
+          <div class="userGrap">
+            <?php
+              $avatar = $user['avatar'] ?? '';
+              $avatarUrl = $avatar ? "/laptop_store/public/avatars/" . htmlspecialchars($avatar) : '';
+            ?>
+            <?php if ($avatarUrl): ?>
+              <img src="<?= $avatarUrl ?>" alt="Avatar" id="userDropdown" class="rounded-circle" style="width:36px;height:36px;object-fit:cover;">
+            <?php else: ?>
+              <div class="userRound">
+                <i class="fa-regular fa-user" id="userDropdown"></i>
+              </div>
+            <?php endif; ?>
+            <div class="userText">
+              <p>Welcome,</p>
+              <p> <?= htmlspecialchars($user['username']) ?></p>
+            </div>
+          </div>
           <div class="dropdown" id="dropdownMenu">
-            <a href="profile.php">Thay đổi thông tin</a>
-            <a href="index.php?page=logout">Đăng xuất</a>
+            <a href="/laptop_store/public/index.php?page=profile">Thay đổi thông tin</a>
+            <a href="/laptop_store/public/index.php?page=logout">Đăng xuất</a>
           </div>
         </div>
 

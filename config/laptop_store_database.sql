@@ -10,6 +10,7 @@ CREATE TABLE users (
     email VARCHAR(100),
     phone VARCHAR(20),
     address VARCHAR(255),
+    avatar VARCHAR(255),
     role ENUM('admin','customer') DEFAULT 'customer',
     status TINYINT(1) DEFAULT 1,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -92,6 +93,7 @@ CREATE TABLE faqs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     question TEXT NOT NULL,
     answer TEXT,
+    type ENUM('Câu hỏi chung', 'Shipping', 'Đặt hàng', 'Hỗ trợ kỹ thuật') DEFAULT 'Câu hỏi chung',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -102,10 +104,12 @@ CREATE TABLE settings (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE categories (
+CREATE TABLE creators (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    slug VARCHAR(150) NOT NULL UNIQUE,
-    description TEXT,
+    role VARCHAR(100),
+    bio TEXT,
+    profile_image VARCHAR(255),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
+
