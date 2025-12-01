@@ -71,12 +71,15 @@ CREATE TABLE comments (
     FOREIGN KEY (laptop_id) REFERENCES laptops(id)
 );
 
-CREATE TABLE news (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(150) NOT NULL,
-    content TEXT,
-    image VARCHAR(255),
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE posts ( 
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    title VARCHAR(255) NOT NULL, 
+    slug VARCHAR(255) NOT NULL UNIQUE, 
+    description TEXT, 
+    content TEXT, 
+    thumbnail VARCHAR(255), 
+    keywords VARCHAR(255), 
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP 
 );
 
 CREATE TABLE contacts (
