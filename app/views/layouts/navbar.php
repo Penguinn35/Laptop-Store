@@ -9,8 +9,8 @@ $user = $_SESSION['user'] ?? null;
 
 <!-- NAVBAR -->
 
-<div class="navbar-wrap">
-  <nav class="navbar">
+<div class="myNavbar-wrap">
+  <nav class="myNavbar">
 
     <!-- Logo -->
     <a class="logo" href="index.php?page=home">LaptopStore</a>
@@ -21,11 +21,10 @@ $user = $_SESSION['user'] ?? null;
     </div>
 
     <!-- Nav links -->
-    <ul class="nav-links" id="navLinks">
+    <ul class="myNav-links" id="navLinks">
       <li><a href="/laptop_store/public/index.php?page=home">Trang chủ</a></li>
       <li><a href="/laptop_store/public/index.php?page=products">Sản phẩm</a></li>
       <li><a href="/laptop_store/public/index.php?page=news">Tin tức</a></li>
-      <li><a href="/laptop_store/public/index.php?page=qna">hỏi đáp</a></li>
       <li><a href="/laptop_store/public/index.php?page=contact">Liên hệ</a></li>
       <li><a href="/laptop_store/public/index.php?page=faq">FAQ</a></li>
       <li><a href="/laptop_store/public/index.php?page=about">Về chúng tôi</a></li>
@@ -182,7 +181,7 @@ $user = $_SESSION['user'] ?? null;
   });
 
   window.addEventListener("click", (e) => {
-    if (!e.target.closest(".navbar")) {
+    if (!e.target.closest(".myNavbar")) {
       document.getElementById("navLinks").classList.remove("show");
     }
   });

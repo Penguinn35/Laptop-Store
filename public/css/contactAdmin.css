@@ -1,0 +1,19 @@
+.contact-manage-wrap{
+    max-width: 80%;
+    margin: 0px auto;
+    margin-top: 160px;
+}
+
+
+
+table td, table th {
+  word-break: break-word; /* legacy */
+  overflow-wrap: anywhere; /* modern */
+}
+
+@media (max-width: 768px) {
+
+    .contact-manage-wrap{
+    max-width: 100%;
+}
+}

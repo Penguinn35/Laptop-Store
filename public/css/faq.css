@@ -76,22 +76,13 @@
   background-color: rgba(0, 123, 255, 0.1);
 }
 
-.navbar {
-  margin-left: 4%;
-  margin-right: 4%;
-  box-sizing: content-box;
-  position: static;
-  height: 67.2px;
-  font-size: 16px;
-}
+
 
 .logo {
   font-size: larger;
 }
 
-.nav-links {
-  margin-bottom: 0;
-}
+
 
 .userText {
   p {

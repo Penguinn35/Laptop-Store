@@ -16,7 +16,7 @@
             background: white;
             padding: 20px;
             border-radius: 6px;
-            margin-top: 60px;
+            margin-top: 100px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 

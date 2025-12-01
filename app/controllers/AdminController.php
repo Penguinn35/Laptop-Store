@@ -22,7 +22,7 @@ class AdminController
             header("Location: /laptop_store/public/index.php?page=home");
             exit;
         }
-
+        $pageCss = "adminDashboard";
         include "../app/views/layouts/header.php";
         include "../app/views/admin/dashboard.php";
     }
@@ -47,7 +47,7 @@ class AdminController
         $total = $db->query("SELECT COUNT(*) AS total FROM contacts")->fetch_assoc()['total'];
 
         $totalPages = ceil($total / $limit);
-
+        $pageCss = "contactAdmin";
         include "../app/views/layouts/header.php";
         include "../app/views/admin/contacts.php";
     }
@@ -77,15 +77,43 @@ class AdminController
         header("Location: /laptop_store/public/index.php?page=admin_contacts");
         exit;
     }
+    public function markContactAjax()
+    {
+        Auth::requireAdmin();
+
+        $data = json_decode(file_get_contents("php://input"), true);
+        $id = $data['id'];
+        $status = $data['status'];
+
+        $stmt = $this->db->prepare("UPDATE contacts SET status = ? WHERE id = ?");
+        $stmt->bind_param("si", $status, $id);
+        $stmt->execute();
+
+        echo json_encode(["success" => true]);
+        exit;
+    }
+
+    public function deleteContactAjax()
+    {
+        Auth::requireAdmin();
+
+        $data = json_decode(file_get_contents("php://input"), true);
+        $id = $data['id'];
+
+        $stmt = $this->db->prepare("DELETE FROM contacts WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        echo json_encode(["success" => true]);
+        exit;
+    }
 
     public function settings()
     {
         Auth::requireAdmin();
         $db = (new Database())->getConnection();
-
-       
-        $query = $db->query("SELECT * FROM settings LIMIT 1");
-        $settings = $query->fetch_assoc(); 
+        $settingModel = new Setting($db);
+        $settings = $settingModel->all();
 
 
 
@@ -98,12 +126,24 @@ class AdminController
         Auth::requireAdmin();
         $setting = new Setting($this->db);
 
+        // Save normal text settings
         foreach ($_POST as $key => $val) {
             $setting->update($key, $val);
         }
 
+        // Handle banner image upload
+        if (isset($_FILES['banner_image']) && $_FILES['banner_image']['error'] === UPLOAD_ERR_OK) {
+
+            $target = __DIR__ . '/../../public/images/banner.jpg';
+
+
+            move_uploaded_file($_FILES['banner_image']['tmp_name'], $target);
+        }
+
         header("Location: /laptop_store/public/index.php?page=admin_settings");
+        exit;
     }
+
 
     public function about()
     {

@@ -5,66 +5,34 @@ body {
   background-color: #FAFAFA;
 }
 
-/* Navbar */
-/* .navbar-grap {
-  min-width: 100%;
-  height: 20px;
-  display: flex;
-  z-index: 2;
-position: fixed;
-  top: 0;
-  left: 0;
-}
 
-.navbar {
-  width: 100%;
-  padding: 40px 10%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-}
-
-
-.user {}
-
-.nav-links {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-  margin: 0px auto;
-}
-
-
-.logo {
-  color: black;
-
-} */
 
 /* Wrapper (fixed) */
-.navbar-wrap {
+.myNavbar-wrap {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 90px;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: transparent;
   z-index: 100;
   margin: 10px 0px;
 }
 
 /* Desktop navbar */
-.navbar {
+.myNavbar {
   width: 80%;
   padding: 20px 6%;
   margin: 0px 4%;
+  margin-top: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   /* background: #606060; */
-  /* From https://css.glass */
   background: rgba(124, 124, 124, 0.35);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -80,20 +48,21 @@ position: fixed;
   text-decoration: none;
 }
 
-.nav-links {
+.myNav-links {
   display: flex;
   gap: 20px;
   list-style: none;
+  margin: 0px;
 }
 
-.nav-links li a {
+.myNav-links li a {
   text-decoration: none;
   color: #ffffff;
   font-weight: 500;
 }
 
 /* User buttons */
-.user{
+.user {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -101,14 +70,17 @@ position: fixed;
   gap: 8px;
   min-width: 220px;
 }
-.userGrap{
+
+.userGrap {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   margin: 0px 8px;
+
 }
-.userRound{
+
+.userRound {
   width: 36px;
   height: 36px;
   border: #ffffff 1px solid;
@@ -118,14 +90,24 @@ position: fixed;
   justify-content: center;
   cursor: pointer;
 }
-.userText{
+
+.userText {
   color: white;
   margin-left: 8px;
   line-height: 0.6;
+    display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-.fa-user{
+
+.userText p{
+  margin: 0px;
+}
+
+.fa-user {
   color: white;
 }
+
 .btn-small {
   padding: 6px 14px;
   border-radius: 4px;
@@ -159,7 +141,7 @@ position: fixed;
 .dropdown {
   position: absolute;
   top: 40px;
-  right: 0;
+  left: 0;
   background: white;
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -170,6 +152,7 @@ position: fixed;
 
 .dropdown.show {
   display: flex;
+  position: absolute;
 }
 
 .dropdown a {
@@ -180,6 +163,7 @@ position: fixed;
 
 .dropdown a:hover {
   background: #f3f3f3;
+  text-decoration: none;
 }
 
 /* Hamburger (hidden on desktop) */
@@ -203,11 +187,19 @@ position: fixed;
   display: none;
 }
 
+@media(max-width: 1150px) {
+  .myNavbar {
+    width: 95%;
+    padding: 20px 5%;
+    margin: 0px;
+  }
+
+}
 
 /* Mobile responsive */
-@media (max-width: 768px) {
+@media (max-width: 925px) {
 
-  .nav-links {
+  .myNav-links {
     position: absolute;
     top: 70px;
     left: 0;
@@ -221,11 +213,11 @@ position: fixed;
     margin: 0px;
   }
 
-  .nav-links.show {
+  .myNav-links.show {
     display: flex;
   }
 
-  .nav-links li {
+  .myNav-links li {
     border-bottom: 1px solid #eee;
     padding: 15px 0px;
   }
@@ -240,8 +232,8 @@ position: fixed;
     display: flex;
   }
 
-  .navbar {
-    width: 90%;
+  .myNavbar {
+    width: 98%;
     padding: 20px 5%;
     margin: 0px;
   }
@@ -286,9 +278,10 @@ position: fixed;
 .popup {
   background: #fff;
   color: #000;
-  padding: 20px 120px;
+  padding: 20px 20px;
   border-radius: 10px;
-  width: 320px;
+  width: 80%;
+  max-width: 500px;
   position: relative;
 }
 
@@ -300,7 +293,7 @@ position: fixed;
   font-size: 18px;
 }
 
-.popup form {
+/* .popup form {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -319,7 +312,7 @@ position: fixed;
   padding: 8px;
   border-radius: 5px;
   cursor: pointer;
-}
+} */
 
 
 
@@ -330,6 +323,7 @@ footer {
   color: white;
   text-align: center;
   padding: 20px 0;
+
 }
 
 
@@ -340,7 +334,7 @@ footer {
 
 
 /* button  */
-/* From Uiverse.io by vinodjangid07 */ 
+/* From Uiverse.io by vinodjangid07 */
 .Btn {
   width: 100px;
   height: 36px;
@@ -378,12 +372,12 @@ footer {
 
 .Btn:hover::before {
   transition-duration: .3s;
-  transform: translate(100%,-50%);
+  transform: translate(100%, -50%);
   border-radius: 0;
 }
 
 .Btn:active {
-  transform: translate(5px,5px);
+  transform: translate(5px, 5px);
   transition-duration: .3s;
 }
 

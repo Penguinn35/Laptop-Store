@@ -12,4 +12,9 @@ $stmt->execute([
     $_POST['message']
 ]);
 
-echo json_encode(["status" => "ok", "message" => "Đã gửi liên hệ thành công"]);
+echo json_encode([
+    "status" => true,
+    "message" => "Gửi liên hệ thành công! Chúng tôi sẽ phản hồi sớm."
+]);
+exit;
+?>

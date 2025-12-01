@@ -1,0 +1,25 @@
+.admindashboard-grap{
+    margin-top: 100px;
+}
+.admin-card {
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.admin-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.admin-icon {
+  font-size: 34px;
+  color: #206bc4; /* Tabler primary */
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+}

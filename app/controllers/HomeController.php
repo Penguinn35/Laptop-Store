@@ -14,7 +14,6 @@ class HomeController
         $settings = $settingModel->all();
 
         $pageCss = "home";   
-        $pageJs  = "home";
         include "../app/views/layouts/header.php";
         include "../app/views/home.php";
         include "../app/views/layouts/footer.php";

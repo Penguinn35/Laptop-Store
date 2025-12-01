@@ -21,7 +21,7 @@ $old    = $_SESSION['profile_old'] ?? [];
 unset($_SESSION['profile_errors'], $_SESSION['profile_old']);
 $avatarUrl = !empty($user['avatar']) ? '/laptop_store/public/avatars/' . htmlspecialchars($user['avatar']) : 'https://placehold.co/160x160?text=Avatar';
 ?>
-<div class="container my-4" style="max-width: 800px;">
+<div class="container " style="max-width: 800px;">
   <h2 class="mb-3">Thông tin cá nhân</h2>
 
   <div class="card mb-4">

@@ -42,10 +42,26 @@ class Router
                 require "../app/controllers/AdminController.php";
                 (new AdminController())->deleteContact();
                 break;
+            case 'contact_mark_ajax':
+                require "../app/controllers/AdminController.php";
+                (new AdminController())->markContactAjax();
+                break;
+
+            case 'contact_delete_ajax':
+                require "../app/controllers/AdminController.php";
+                (new AdminController())->deleteContactAjax();
+                break;
+
+
             case 'admin_settings':
                 require_once "../app/controllers/AdminController.php";
                 (new AdminController())->settings();
                 break;
+            case 'save_settings':
+                require_once "../app/controllers/AdminController.php";
+                (new AdminController())->saveSettings();
+                break;
+
             case 'profile':
                 require_once "../app/controllers/ProfileController.php";
                 (new ProfileController())->profile();
@@ -107,7 +123,7 @@ class Router
                 require_once "../app/controllers/ProductController.php";
                 (new ProductController())->cart();
                 break;
-           
+
             case 'cart_add':
                 require_once "../app/controllers/ProductController.php";
                 (new ProductController())->addToCart();
@@ -116,7 +132,7 @@ class Router
             case 'checkout':
                 require_once "../app/controllers/ProductController.php";
                 (new ProductController())->checkout();
-                break;    
+                break;
 
             // Admin quản lý sản phẩm
             case 'admin_products':
@@ -145,7 +161,6 @@ class Router
                 require_once "../app/controllers/AdminOrderController.php";
                 (new AdminOrderController())->view();
                 break;
-
         }
     }
 }
