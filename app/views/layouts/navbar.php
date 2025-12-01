@@ -24,6 +24,8 @@ $user = $_SESSION['user'] ?? null;
     <ul class="nav-links" id="navLinks">
       <li><a href="/laptop_store/public/index.php?page=home">Trang chủ</a></li>
       <li><a href="/laptop_store/public/index.php?page=products">Sản phẩm</a></li>
+      <li><a href="/laptop_store/public/index.php?page=news">Tin tức</a></li>
+      <li><a href="/laptop_store/public/index.php?page=qna">hỏi đáp</a></li>
       <li><a href="/laptop_store/public/index.php?page=contact">Liên hệ</a></li>
       <li><a href="/laptop_store/public/index.php?page=faq">FAQ</a></li>
       <li><a href="/laptop_store/public/index.php?page=about">Về chúng tôi</a></li>

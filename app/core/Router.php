@@ -24,6 +24,10 @@ class Router
                 include "../app/controllers/ContactController.php";
                 (new ContactController())->index();
                 break;
+            case 'news':
+                require_once "../app/controllers/NewsController.php";
+                (new NewsController())->index();
+                break;
 
             case 'admin_contacts':
                 require_once "../app/controllers/AdminController.php";
