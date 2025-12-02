@@ -83,9 +83,10 @@ INSERT INTO posts (title, slug, description, content, thumbnail, keywords, creat
 );
 
 -- Dữ liệu bảng comments
-INSERT INTO comments (user_id, laptop_id, content, rating) VALUES
-(2, 1, 'Máy chạy rất mượt, pin trâu!', 5),
-(3, 2, 'Chơi game ổn, nhưng hơi nặng.', 4);
+-- INSERT INTO comments (user_id, laptop_id, content, rating) VALUES
+-- (2, 1, 'Máy chạy rất mượt, pin trâu!', 5),
+-- (3, 2, 'Chơi game ổn, nhưng hơi nặng.', 4);
+
 
 -- Dữ liệu bảng contacts
 INSERT INTO contacts (name, email, subject, message) VALUES
