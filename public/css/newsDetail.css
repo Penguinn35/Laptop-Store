@@ -1,0 +1,51 @@
+body { 
+    background: #eef1f5; 
+    font-family: Arial, 
+    sans-serif; padding: 30px; 
+    padding-top: 90px; 
+}
+        
+
+.container { 
+    max-width: 900px; 
+    margin: auto; 
+    background: white; 
+    padding: 30px; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+}
+
+.post-header { 
+    margin-bottom: 25px; 
+    border-bottom: 1px solid #eee; 
+    padding-bottom: 15px; 
+}
+    
+.post-header h1 { 
+    font-size: 32px; 
+    margin-top: 0; 
+}
+    
+.post-meta { 
+    font-size: 14px; 
+    color: #666; 
+}
+.post-meta span { 
+    margin-right: 15px; 
+}
+        
+.post-thumbnail { 
+    max-width: 100%; 
+    height: auto; 
+    border-radius: 6px; 
+    margin-bottom: 25px; 
+}
+        
+.post-content { 
+    line-height: 1.8; 
+    font-size: 16px; 
+}
+        
+.post-content p { 
+    margin-bottom: 1.5em; 
+}
