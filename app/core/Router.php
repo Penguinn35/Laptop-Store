@@ -24,9 +24,15 @@ class Router
                 include "../app/controllers/ContactController.php";
                 (new ContactController())->index();
                 break;
+            
+            # Trang tin tức
             case 'news':
                 require_once "../app/controllers/NewsController.php";
                 (new NewsController())->index();
+                break;
+            case 'news_detail':
+                require_once "../app/controllers/NewsController.php";
+                (new NewsController())->detail();
                 break;
 
             case 'admin_contacts':

@@ -64,11 +64,14 @@ CREATE TABLE comments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     laptop_id INT,
+    new_id INT,
     content TEXT,
+    status BOOLEAN,
     rating INT CHECK (rating BETWEEN 1 AND 5),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (laptop_id) REFERENCES laptops(id)
+    FOREIGN KEY (laptop_id) REFERENCES laptops(id),
+    FOREIGN KEY (new_id) REFERENCES posts(id)
 );
 
 CREATE TABLE posts ( 

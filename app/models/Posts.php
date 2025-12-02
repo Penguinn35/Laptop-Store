@@ -39,6 +39,27 @@ class Posts {
 
         return $stmt->get_result()->fetch_assoc()['total'];
     }
+
+    public function getPostBySlug($slug) {
+        $sql = "SELECT * FROM posts 
+                WHERE slug = ?"; 
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("s", $slug);
+        $stmt->execute();
+        
+        // Sử dụng get_result() và fetch_assoc() để lấy 1 hàng duy nhất
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+    // Phương thức tăng lượt xem bài viết
+    // public function incrementViewCount($postId) {
+    //     $sql = "UPDATE posts SET view_count = view_count + 1 WHERE id = ?";
+    //     $stmt = $this->db->prepare($sql);
+    //     $stmt->bind_param("i", $postId);
+    //     $stmt->execute();
+    // }
 }
 
 ?>
