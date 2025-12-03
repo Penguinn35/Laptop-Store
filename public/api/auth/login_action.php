@@ -29,6 +29,11 @@ if (!password_verify($password, $user['password'])) {
   exit;
 }
 
+if (!$user['status']) {
+  echo json_encode(['status' => 'error', 'message' => 'Tài khoản không hoạt động']);
+  exit;
+}
+
 // Store full user info into session for profile display
 $_SESSION['user'] = [
   'id' => $user['id'],

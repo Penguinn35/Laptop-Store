@@ -6,6 +6,7 @@ require_once "../app/models/FAQ.php";
 require_once "../app/models/Creator.php";
 require_once "../app/models/Posts.php";
 require_once "../app/models/Comments.php";
+require_once "../app/models/User.php";
 
 class AdminController
 {
@@ -146,6 +147,62 @@ class AdminController
         exit;
     }
 
+    public function user()
+    {
+        Auth::requireAdmin();
+        $userModel = new User($this->db);
+        
+        $currentUserId = $_SESSION['user']['id'] ?? 0;  
+        // Xử lý Hành động (Khóa, Mở khóa, Reset Mật khẩu, Phân quyền)
+        if (isset($_GET['action']) && isset($_GET['id'])) {
+            $id = (int)$_GET['id'];
+            $success = false;
+            $action = $_GET['action'];
+            $message = "Thao tác thất bại.";
+
+            switch ($action) {
+                case 'lock':
+                    $success = $userModel->updateStatus($id, 0); // 0: Khóa
+                    $message = $success ? "Đã khóa người dùng thành công." : $message;
+                    break;
+                case 'unlock':
+                    $success = $userModel->updateStatus($id, 1); // 1: Mở
+                    $message = $success ? "Đã mở khóa người dùng thành công." : $message;
+                    break;
+                case 'reset_password':
+                    $newPassword = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 6); // Tạo mật khẩu 6 ký tự
+                    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                    $success = $userModel->resetPassword($id, $hashedPassword);
+                    
+                    if ($success) {
+                        // Cần hiển thị mật khẩu mới cho Admin (trong môi trường thực tế nên gửi qua email)
+                        $message = "Đã Reset mật khẩu thành công! Mật khẩu mới: **{$newPassword}** (Hãy thông báo cho người dùng).";
+                    }
+                    break;
+                case 'set_admin':
+                case 'set_customer':
+                    $newRole = ($action === 'set_admin') ? 'admin' : 'customer';
+                    $success = $userModel->updateRole($id, $newRole);
+                    $message = $success ? "Đã cập nhật vai trò thành {$newRole}." : $message;
+                    break;
+            }
+
+            if ($success) {
+                $_SESSION['admin_message'] = $message;
+            }
+            
+            header("Location: /laptop_store/public/index.php?page=admin_manage"); 
+            exit();
+        }
+        
+        // Load Dữ liệu và View
+        $pageTitle = "Quản lý Người dùng";
+        $useTabler = true;    
+        $users = $userModel->getAllUsers($currentUserId);
+        
+        include "../app/views/layouts/header.php";
+        include "../app/views/admin/users.php";
+    }
 
     public function about()
     {
@@ -245,7 +302,6 @@ class AdminController
 
         $pageTitle = "Quản Lý Bài Viết";
         $useTabler = true;
-        $pageCss = "newsList";
         include "../app/views/layouts/header.php";
         include "../app/views/admin/news/lists.php";
     }
@@ -348,7 +404,6 @@ class AdminController
 
         $pageTitle = $id ? "Sửa Bài viết: " . ($post['title'] ?? '') : "Thêm Bài viết Mới";
         $useTabler = true;
-        $pageCss = "newsDetail";
         include "../app/views/layouts/header.php";
         include "../app/views/admin/news/detail.php";
     }

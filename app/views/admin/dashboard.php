@@ -25,6 +25,15 @@
       </div>
 
       <div class="col-md-4">
+        <a href="/laptop_store/public/index.php?page=admin_manage" class="card admin-card">
+          <div class="card-body text-center">
+            <i class="fa-solid fa-users admin-icon"></i>
+            <h3 class="card-title mt-2">Quản lý người dùng</h3>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-4">
         <a href="/laptop_store/public/index.php?page=admin_contacts" class="card admin-card">
           <div class="card-body text-center">
             <i class="fa-solid fa-envelope admin-icon"></i>
