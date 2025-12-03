@@ -4,7 +4,8 @@
 <div class="container py-4">
     <h1 class="mb-3">Laptop</h1>
 
-    <form class="row g-2 mb-3" method="get" action="/products">
+    <form class="row g-2 mb-3" method="get" action="index.php">
+        <input type="hidden" name="page" value="products"> 
         <div class="col-sm-10">
             <input type="text" name="q" class="form-control"
                    placeholder="Tìm kiếm laptop theo tên, hãng..."
@@ -22,9 +23,10 @@
             <?php foreach ($products as $p): ?>
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
-                        <img src="/public/images/<?php echo htmlspecialchars($p['image'] ?? 'no-image.jpg', ENT_QUOTES, 'UTF-8'); ?>"
+                        <img src="images/products_img/<?php echo htmlspecialchars($p['image'] ?? 'no-image.jpg', ENT_QUOTES, 'UTF-8'); ?>"
                             class="card-img-top"
                             alt="<?php echo htmlspecialchars($p['name'] ?? 'Laptop', ENT_QUOTES, 'UTF-8'); ?>">
+                            
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title"><?php echo htmlspecialchars($p['name']); ?></h5>
                             <p class="card-text mb-1">
@@ -42,11 +44,12 @@
                                 <?php endif; ?>
                             </p>
                             <div class="mt-auto d-flex gap-2">
-                                <a href="/index.php?page=product_detail&id=<?php echo (int)$p['id']; ?>"
+                                <a href="index.php?page=product_detail&id=<?php echo (int)$p['id']; ?>"
                                    class="btn btn-outline-primary btn-sm">
                                     Xem chi tiết
                                 </a>
-                                <form method="post" action="/cart/add" class="d-inline">
+                                
+                                <form method="post" action="index.php?page=cart_add" class="d-inline">
                                     <input type="hidden" name="product_id" value="<?php echo $p['id']; ?>">
                                     <input type="hidden" name="quantity" value="1">
                                     <button type="submit" class="btn btn-primary btn-sm">
@@ -66,7 +69,7 @@
                     <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                         <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
                             <a class="page-link"
-                               href="/products?page=<?php echo $i; ?>&q=<?php echo urlencode($keyword); ?>">
+                               href="index.php?page=products&p=<?php echo $i; ?>&q=<?php echo urlencode($keyword); ?>">
                                 <?php echo $i; ?>
                             </a>
                         </li>
