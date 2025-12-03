@@ -3,32 +3,28 @@
 
 require_once __DIR__ . '/../models/Laptop.php';
 require_once __DIR__ . '/../core/Database.php';
-require_once __DIR__ . '/../models/Setting.php'; 
+require_once __DIR__ . '/../models/Setting.php';
+// 1. NẠP MODEL ORDER
+require_once __DIR__ . '/../models/Order.php';
 
 class ProductController
 {
     private $laptopModel;
-    private $db; // Biến để lưu kết nối DB dùng chung
+    private $db;
 
     public function __construct()
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-
-        // Tạo kết nối DB
         $this->db = (new Database())->getConnection();
+        $this->laptopModel = new Laptop();
 
-        // Khởi tạo model Laptop
-        $this->laptopModel = new Laptop(); // Lưu ý: Laptop model của bạn có thể cần truyền $db vào constructor tùy cách bạn viết
-
-        // Khởi tạo giỏ hàng nếu chưa có
         if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = []; 
+            $_SESSION['cart'] = [];
         }
     }
 
-    // Hàm hỗ trợ lấy Settings cho đỡ lặp code
     private function getSettings() {
         $settingModel = new Setting($this->db);
         return $settingModel->all();
@@ -193,6 +189,125 @@ class ProductController
     public function checkout()
     {
         $settings = $this->getSettings();
-        echo "Checkout – bạn có thể hiện thực sau.";
+
+        // Nếu giỏ hàng rỗng, đá về trang sản phẩm
+        if (empty($_SESSION['cart'])) {
+            header('Location: index.php?page=products');
+            exit;
+        }
+
+        // Lấy thông tin sản phẩm trong giỏ để hiển thị lại
+        $cart_items = [];
+        $total = 0;
+        
+        $ids = array_map('intval', array_keys($_SESSION['cart']));
+        if (!empty($ids)) {
+            $ids_str = implode(',', $ids);
+            $sql = "SELECT * FROM laptops WHERE id IN ($ids_str)";
+            $result = $this->db->query($sql);
+            
+            while ($row = $result->fetch_assoc()) {
+                $id = $row['id'];
+                $qty = $_SESSION['cart'][$id];
+                $price = $row['price'];
+                $subtotal = $price * $qty;
+                $total += $subtotal;
+
+                $cart_items[] = [
+                    'id' => $id,
+                    'name' => $row['name'],
+                    'price' => $price,
+                    'qty' => $qty,
+                    'subtotal' => $subtotal
+                ];
+            }
+        }
+
+        // Thông tin user nếu đã đăng nhập (để điền sẵn vào form)
+        $user = $_SESSION['user'] ?? null;
+
+        require_once __DIR__ . '/../views/cart/checkout.php';
+    }
+
+    // --- HÀM MỚI: XỬ LÝ THANH TOÁN ---
+    public function processCheckout()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: index.php?page=checkout');
+            exit;
+        }
+
+        if (empty($_SESSION['cart'])) {
+            header('Location: index.php?page=products');
+            exit;
+        }
+
+        // 1. Lấy dữ liệu từ Form
+        $fullname = $_POST['fullname'] ?? '';
+        $email    = $_POST['email'] ?? '';
+        $phone    = $_POST['phone'] ?? '';
+        $address  = $_POST['address'] ?? '';
+        $note     = $_POST['note'] ?? '';
+
+        // 2. Tính toán lại tổng tiền và chuẩn bị danh sách items
+        // (Không tin tưởng dữ liệu giá từ client gửi lên, phải query lại DB)
+        $items_for_db = [];
+        $total_amount = 0;
+
+        $ids = array_map('intval', array_keys($_SESSION['cart']));
+        if (!empty($ids)) {
+            $ids_str = implode(',', $ids);
+            $sql = "SELECT id, price FROM laptops WHERE id IN ($ids_str)";
+            $result = $this->db->query($sql);
+            
+            while ($row = $result->fetch_assoc()) {
+                $id = $row['id'];
+                $qty = (int)$_SESSION['cart'][$id];
+                $price = (float)$row['price'];
+                
+                $total_amount += ($price * $qty);
+
+                // Cấu trúc item khớp với Model Order::createOrder
+                $items_for_db[] = [
+                    'laptop_id'  => $id,
+                    'quantity'   => $qty,
+                    'unit_price' => $price
+                ];
+            }
+        }
+
+        // 3. Chuẩn bị dữ liệu Order
+        $orderData = [
+            'user_id'      => isset($_SESSION['user']) ? $_SESSION['user']['id'] : null, // Nếu khách vãng lai thì null
+            'full_name'    => $fullname,
+            'email'        => $email,
+            'phone'        => $phone,
+            'address'      => $address,
+            'note'         => $note,
+            'total_amount' => $total_amount,
+            'status'       => 'pending'
+        ];
+
+        // 4. Gọi Model để lưu
+        $orderModel = new Order();
+        $orderId = $orderModel->createOrder($orderData, $items_for_db);
+
+        if ($orderId) {
+            // Thành công: Xóa giỏ hàng và chuyển hướng
+            unset($_SESSION['cart']);
+            header('Location: index.php?page=order_success&id=' . $orderId);
+            exit;
+        } else {
+            // Thất bại
+            echo "<script>alert('Có lỗi xảy ra khi tạo đơn hàng. Vui lòng thử lại!'); window.history.back();</script>";
+        }
+    }
+
+    // --- HÀM MỚI: TRANG THÔNG BÁO THÀNH CÔNG ---
+    public function orderSuccess()
+    {
+        $settings = $this->getSettings();
+        $orderId = $_GET['id'] ?? 0;
+        require_once __DIR__ . '/../views/cart/success.php';
     }
 }
