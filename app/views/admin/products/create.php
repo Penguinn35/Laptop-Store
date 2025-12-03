@@ -1,5 +1,5 @@
 <?php include __DIR__ . '/../../layouts/header.php'; ?>
-<div class="page-wrapper">
+<div class="page-wrapper" style="margin-top: 120px;">
     <div class="container-xl">
         <div class="page-header d-print-none">
             <div class="row align-items-center">

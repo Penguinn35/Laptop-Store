@@ -1,7 +1,7 @@
 <?php include __DIR__ . '/../layouts/header.php'; ?>
 <?php include __DIR__ . '/../layouts/navbar.php'; ?>
 
-<div class="bg-light py-3 mb-4">
+<div class="bg-light py-3 mb-4" style="margin-top: 120px;">
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">

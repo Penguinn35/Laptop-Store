@@ -30,11 +30,14 @@ $user = $_SESSION['user'] ?? null;
       <li><a href="/laptop_store/public/index.php?page=about">Về chúng tôi</a></li>
       <li class="mobile-user">
         <?php if (!$isLoggedIn): ?>
-          <button id="loginBtn_mobile" class="btn-small">Đăng nhập</button>
-          <button id="registerBtn_mobile" class="btn-small">Đăng ký</button>
+          <button id="loginBtn" class="btn-small">Đăng nhập</button>
+          <button id="registerBtn" class="btn-small">Đăng ký</button>
 
 
         <?php else: ?>
+          <?php if ($user['role'] === 'admin'): ?>
+            <a href="/laptop_store/public/index.php?page=admin" class="admin-btn-mobile">Dashboard</a>
+          <?php endif; ?>
           <a href="profile.php">Thay đổi thông tin</a>
           <a href="index.php?page=logout">Đăng xuất</a>
         <?php endif; ?>
@@ -53,8 +56,8 @@ $user = $_SESSION['user'] ?? null;
 
           <div class="userGrap">
             <?php
-              $avatar = $user['avatar'] ?? '';
-              $avatarUrl = $avatar ? "/laptop_store/public/avatars/" . htmlspecialchars($avatar) : '';
+            $avatar = $user['avatar'] ?? '';
+            $avatarUrl = $avatar ? "/laptop_store/public/avatars/" . htmlspecialchars($avatar) : '';
             ?>
             <?php if ($avatarUrl): ?>
               <img src="<?= $avatarUrl ?>" alt="Avatar" id="userDropdown" class="rounded-circle" style="width:36px;height:36px;object-fit:cover;">

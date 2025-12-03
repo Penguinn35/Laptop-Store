@@ -1,7 +1,7 @@
 <?php include __DIR__ . '/../layouts/header.php'; ?>
 <?php include __DIR__ . '/../layouts/navbar.php'; ?>
 
-<div class="container py-4">
+<div class="container py-4" style="margin-top: 120px;">
     <h1 class="mb-3">Laptop</h1>
 
     <form class="row g-2 mb-3" method="get" action="index.php">

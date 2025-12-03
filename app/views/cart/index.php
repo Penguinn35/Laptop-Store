@@ -1,7 +1,7 @@
 <?php include __DIR__ . '/../layouts/header.php'; ?>
 <?php include __DIR__ . '/../layouts/navbar.php'; ?>
 
-<div class="container py-4">
+<div class="container py-4" style="margin-top: 120px; min-height: calc(100vh - 380px);">
     <h1>Giỏ hàng</h1>
 
     <?php if (empty($cart_items)): ?>
