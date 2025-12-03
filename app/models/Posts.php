@@ -53,6 +53,69 @@ class Posts {
         return $result->fetch_assoc();
     }
 
+    public function getPostById($id) {
+        $sql = "SELECT * FROM posts WHERE id = ?"; 
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+    public function createPost($data) {
+        $sql = "INSERT INTO posts (title, slug, description, content, thumbnail, keywords) 
+                VALUES (?, ?, ?, ?, ?, ?)";
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param(
+            "ssssss", 
+            $data['title'], 
+            $data['slug'], 
+            $data['description'], 
+            $data['content'], 
+            $data['thumbnail'], 
+            $data['keywords']
+        );
+        
+        return $stmt->execute();
+    }
+
+    public function updatePost($id, $data) {
+        $sql = "UPDATE posts SET 
+                    title = ?, 
+                    slug = ?, 
+                    description = ?, 
+                    content = ?, 
+                    thumbnail = ?, 
+                    keywords = ? 
+                WHERE id = ?";
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param(
+            "ssssssi", 
+            $data['title'], 
+            $data['slug'], 
+            $data['description'], 
+            $data['content'], 
+            $data['thumbnail'], 
+            $data['keywords'], 
+            $id
+        );
+        
+        return $stmt->execute();
+    }
+
+    public function deletePost($id) {
+        $sql = "DELETE FROM posts WHERE id = ?";
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        
+        return $stmt->execute();
+    }
+
     // Phương thức tăng lượt xem bài viết
     // public function incrementViewCount($postId) {
     //     $sql = "UPDATE posts SET view_count = view_count + 1 WHERE id = ?";

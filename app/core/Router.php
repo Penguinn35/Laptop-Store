@@ -35,6 +35,16 @@ class Router
                 (new NewsController())->detail();
                 break;
 
+            # Quản lý tin tức - Admin
+            case 'admin_news':
+                require_once "../app/controllers/AdminController.php";
+                (new AdminController())->news();
+                break;
+            case 'admin_news_detail':
+                require_once "../app/controllers/AdminController.php";
+                (new AdminController())->newsDetail();
+                break;
+
             case 'admin_contacts':
                 require_once "../app/controllers/AdminController.php";
                 (new AdminController())->contacts();

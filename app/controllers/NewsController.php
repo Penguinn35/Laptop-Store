@@ -90,7 +90,7 @@ class NewsController {
         
         // --- Lấy Danh sách Bình Luận ---
         $postId = $post['id'];
-        $comments = $commentModel->getCommentsByPostId($postId);
+        $comments = $commentModel->getAllCommentsForClient($postId);
 
         // 3. Tăng lượt xem (Tùy chọn)
         // $postModel->incrementViewCount($post['id']); 
