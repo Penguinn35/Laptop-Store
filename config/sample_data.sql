@@ -10,14 +10,32 @@ INSERT INTO brands (id, name, logo, description) VALUES
 
 -- Dữ liệu bảng laptops
 INSERT INTO laptops (brand_id, name, description, cpu, ram, storage, gpu, screen, price, image, stock) VALUES
+(1, 'Dell Inspiron 15 3000', 'Laptop văn phòng giá rẻ, bền bỉ.', 'Intel Core i3-1115G4', '8GB', '256GB SSD', 'Intel UHD', '15.6" FHD', 10500000, 'inspiron15.jpg', 20),
+(1, 'Dell Vostro 3510', 'Thiết kế sang trọng, hiệu năng ổn định.', 'Intel Core i5-1135G7', '8GB', '512GB SSD', 'MX350 2GB', '15.6" FHD', 14500000, 'vostro3510.webp', 15),
+(1, 'Dell Latitude 3420', 'Laptop doanh nghiệp, bảo mật cao.', 'Intel Core i5-1135G7', '16GB', '256GB SSD', 'Intel Iris Xe', '14" FHD', 16000000, 'latitude3420.jpg', 10),
+(2, 'Asus Vivobook Go 15', 'Mỏng nhẹ, màn hình OLED rực rỡ.', 'AMD Ryzen 5 7520U', '16GB', '512GB SSD', 'AMD Radeon', '15.6" OLED', 12990000, 'go15.jpg', 25),
+(2, 'Asus Zenbook 14 OLED', 'Ultrabook cao cấp, siêu mỏng.', 'Intel Core i7-1360P', '16GB', '512GB SSD', 'Intel Iris Xe', '14" 2.8K OLED', 24000000, 'zen14.jpg', 8),
+(2, 'Asus ROG Strix G15', 'Laptop gaming chiến mọi game.', 'Ryzen 7 6800H', '16GB', '512GB SSD', 'RTX 3060', '15.6" 144Hz', 28500000, 'strixg15.jpg', 5),
+(3, 'HP Pavilion 15', 'Thời trang, âm thanh B&O cực hay.', 'Intel Core i5-1240P', '8GB', '512GB SSD', 'Intel Iris Xe', '15.6" FHD', 15500000, 'pavilion15.jpg', 12),
+(3, 'HP Envy x360', 'Xoay gập 360 độ, màn hình cảm ứng.', 'Ryzen 5 5625U', '8GB', '256GB SSD', 'AMD Radeon', '13.3" FHD Touch', 19000000, 'envyx360.webp', 7),
+(3, 'HP Omen 16', 'Cỗ máy gaming đỉnh cao từ HP.', 'Intel Core i7-12700H', '16GB', '1TB SSD', 'RTX 3070 Ti', '16.1" QHD 165Hz', 35000000, 'omen16.jpg', 4),
+(4, 'Acer Nitro 5 Tiger', 'Ông vua gaming giá rẻ.', 'Intel Core i5-12500H', '8GB', '512GB SSD', 'RTX 3050', '15.6" 144Hz', 19990000, 'nitro5.jpg', 30),
+(4, 'Acer Swift 3', 'Vỏ kim loại nguyên khối, siêu nhẹ.', 'Intel Core i5-1135G7', '16GB', '512GB SSD', 'Intel Iris Xe', '14" FHD', 16500000, 'swift3.jpg', 10),
+(4, 'Acer Predator Helios 300', 'Vũ khí tối thượng cho game thủ.', 'Intel Core i9-12900H', '32GB', '1TB SSD', 'RTX 3080', '15.6" QHD 165Hz', 45000000, 'helios300.jpg', 3),
+(2, 'Asus TUF Gaming A15', 'Bền chuẩn quân đội, pin trâu.', 'Ryzen 7 7735HS', '16GB', '512GB SSD', 'RTX 4050', '15.6" 144Hz', 26000000, 'tufa15.jpg', 15),
+(1, 'Dell Alienware m15 R7', 'Thiết kế ngoài hành tinh, tản nhiệt tốt.', 'Ryzen 7 6800H', '32GB', '1TB SSD', 'RTX 3070 Ti', '15.6" QHD 240Hz', 55000000, 'm15r7.jpg', 2),
+(5, 'Msi Katana 15', 'Laptop gaming cực chất chiến game cực khoẻ', 'Intel Core i7-14650HX', '16GB', '512GB SSD', 'RTX 5060', '15.6" QHD 165Hz', 34000000, 'katana15.jpg', 8),
 (1, 'Dell XPS 13', 'Laptop mỏng nhẹ cao cấp cho doanh nhân.', 'Intel Core i7-1360P', '16GB', '512GB SSD', 'Intel Iris Xe', '13.4"', 32000000, 'xps13.jpg', 10),
 (2, 'Asus TUF Gaming F15', 'Laptop gaming mạnh mẽ, bền bỉ.', 'Intel Core i5-12450H', '16GB', '512GB SSD', 'RTX 3050', '15.6"', 25000000, 'tuff15.png', 5),
 (3, 'HP Spectre x360', 'Laptop 2 trong 1 cao cấp, xoay gập linh hoạt.', 'Intel Core i7-1355U', '16GB', '1TB SSD', 'Intel Iris Xe', '13.5"', 34000000, 'spectre.jpg', 8),
 (4, 'Acer Aspire 7', 'Laptop học tập và làm việc hiệu quả.', 'AMD Ryzen 5 5500U', '8GB', '512GB SSD', 'GTX 1650', '15.6"', 19000000, 'aspire7.png', 12);
 
--- Dữ liệu bảng users
-INSERT INTO users (username, password, fullname, email, role) VALUES
 
+-- Dữ liệu bảng users
+INSERT INTO users (id, username, password, fullname, email, role) VALUES
+(1, 'admin', '123456', 'Quản Trị Viên', 'admin@laptopstore.vn', 'admin'),
+(2, 'nguyenvana', '123456', 'Nguyễn Văn A', 'nguyenvana@gmail.com', 'customer'),
+(3, 'lethib', '123456', 'Lê Thị B', 'lethib@gmail.com', 'customer');
 
 -- Dữ liệu bảng posts
 INSERT INTO posts (title, slug, description, content, thumbnail, keywords, created_at) VALUES
@@ -83,9 +101,10 @@ INSERT INTO posts (title, slug, description, content, thumbnail, keywords, creat
 );
 
 -- Dữ liệu bảng comments
-INSERT INTO comments (user_id, laptop_id, content, rating) VALUES
-(2, 1, 'Máy chạy rất mượt, pin trâu!', 5),
-(3, 2, 'Chơi game ổn, nhưng hơi nặng.', 4);
+-- INSERT INTO comments (user_id, laptop_id, content, rating) VALUES
+-- (2, 1, 'Máy chạy rất mượt, pin trâu!', 5),
+-- (3, 2, 'Chơi game ổn, nhưng hơi nặng.', 4);
+
 
 -- Dữ liệu bảng contacts
 INSERT INTO contacts (name, email, subject, message) VALUES

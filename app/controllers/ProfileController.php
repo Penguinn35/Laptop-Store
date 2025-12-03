@@ -11,7 +11,7 @@ class ProfileController {
         $settings = $settingModel->all(); 
         $pageCss = "profile";
         if (!isset($_SESSION['user'])) {
-            header("Location: /laptop_store/public/index.php?page=home");
+            header("Location: index.php?page=home");
             exit;
         }
         include __DIR__ . '/../views/layouts/header.php';
@@ -22,7 +22,7 @@ class ProfileController {
     public function updateProfile() {
         session_start();
         if (!isset($_SESSION['user'])) {
-            header("Location: /laptop_store/public/index.php?page=home");
+            header("Location: index.php?page=home");
             exit;
         }
         $db = (new Database())->getConnection();
@@ -92,7 +92,7 @@ class ProfileController {
 
         $avatarName = null;
 
-        $avatarsDir = __DIR__ . '/../../public/avatars';
+        $avatarsDir = __DIR__ . '/../../avatars';
         if (!is_dir($avatarsDir)) {
             @mkdir($avatarsDir, 0775, true);
         }
@@ -122,7 +122,7 @@ class ProfileController {
                 'phone'    => $phone,
                 'address'  => $address,
             ];
-            header("Location: /laptop_store/public/index.php?page=profile");
+            header("Location: index.php?page=profile");
             exit;
         }
 
@@ -154,7 +154,7 @@ class ProfileController {
             $_SESSION['user'] = $row;
         }
 
-        header("Location: /laptop_store/public/index.php?page=profile");
+        header("Location: index.php?page=profile");
         exit;
     }
 }

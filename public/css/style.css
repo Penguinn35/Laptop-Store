@@ -33,7 +33,7 @@ body {
   align-items: center;
 
   /* background: #606060; */
-  background: rgba(124, 124, 124, 0.35);
+    background: rgba(148, 148, 148, 0.75);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10.5px);
@@ -48,6 +48,10 @@ body {
   text-decoration: none;
 }
 
+  .logo:hover {
+    text-shadow: #ffffff 1px 0 10px;
+  }
+
 .myNav-links {
   display: flex;
   gap: 20px;
@@ -60,6 +64,9 @@ body {
   color: #ffffff;
   font-weight: 500;
 }
+  .myNav-links li a:hover {
+    text-shadow: #ffffff 1px 0 10px;
+  }
 
 /* User buttons */
 .user {
@@ -95,12 +102,12 @@ body {
   color: white;
   margin-left: 8px;
   line-height: 0.6;
-    display: flex;
+  display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.userText p{
+.userText p {
   margin: 0px;
 }
 
@@ -204,13 +211,22 @@ body {
     top: 70px;
     left: 0;
     width: 100%;
-    padding: 0px;
-    background: rgb(180, 123, 123);
+    padding: 0px 12px;
+
     flex-direction: column;
     gap: 0;
     display: none;
     border-top: 1px solid #eee;
     margin: 0px;
+
+
+
+    background: rgba(148, 148, 148, 0.75);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10.5px);
+    -webkit-backdrop-filter: blur(10.5px);
+    border: 1px solid rgba(124, 124, 124, 0.39);
   }
 
   .myNav-links.show {
@@ -219,8 +235,20 @@ body {
 
   .myNav-links li {
     border-bottom: 1px solid #eee;
-    padding: 15px 0px;
+    padding: 0px 0px;
   }
+
+
+
+  .myNav-links li a {
+    display: block;
+    width: 100%;
+    height: 56px;
+    display: flex;
+    align-items: center;
+  }
+
+
 
   .user {
     position: absolute;
@@ -244,15 +272,26 @@ body {
 
   .mobile-user {
     display: flex;
+    justify-content: center;
     flex-direction: column;
     gap: 10px;
     padding: 15px 10%;
     border-top: 1px solid #eee;
+margin: 8px 0px;
   }
 
   .mobile-user .btn-small {
     width: 100%;
     text-align: center;
+    background-color: #000;
+    border: none;
+  }
+
+  .mobile-user .btn-small:hover {
+    background-color: #1f1f1f;
+  }
+  .admin-btn-mobile{
+    background-color: transparent;
   }
 }
 
