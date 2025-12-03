@@ -8,7 +8,7 @@
         <p>Giỏ hàng đang trống.</p>
         <a href="index.php?page=products" class="btn btn-primary">Tiếp tục mua sắm</a>
     <?php else: ?>
-        <form method="post" action="index.php?page=cart>
+        <form method="post" action="index.php?page=cart">
             <input type="hidden" name="action" value="update">
 
             <table class="table table-bordered align-middle">
@@ -25,7 +25,7 @@
                     <tr>
                         <td>
                             <div class="d-flex align-items-center">
-                                <img src="/images/<?=
+                                <img src="/images/products_img/<?=
                                     htmlspecialchars($item['image'] ?? 'no-image.jpg', ENT_QUOTES, 'UTF-8'); ?>"
                                     alt=""
                                     style="width:60px;height:60px;object-fit:cover;" class="me-2">

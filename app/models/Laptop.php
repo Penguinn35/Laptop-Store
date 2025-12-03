@@ -1,6 +1,8 @@
 <?php
 // app/models/Laptop.php
 
+require_once __DIR__ . '/../core/Database.php';
+
 class Laptop
 {
     private $conn;
@@ -259,7 +261,7 @@ class Laptop
         }
 
         $stmt->bind_param(
-            "issssssdsii",
+            "issssssdsiii",
             $brand_id,
             $name,
             $description,
