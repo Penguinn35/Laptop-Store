@@ -150,6 +150,16 @@ class Router
                 (new ProductController())->checkout();
                 break;
 
+            case 'checkout_process': // Xử lý khi bấm nút "Đặt hàng"
+                require_once "../app/controllers/ProductController.php";
+                (new ProductController())->processCheckout();
+                break;
+                
+            case 'order_success': // Trang thông báo thành công
+                require_once "../app/controllers/ProductController.php";
+                (new ProductController())->orderSuccess();
+                break;    
+
             // Admin quản lý sản phẩm
             case 'admin_products':
                 require_once "../app/controllers/AdminProductController.php";
