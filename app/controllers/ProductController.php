@@ -3,10 +3,12 @@
 
 require_once __DIR__ . '/../models/Laptop.php';
 require_once __DIR__ . '/../core/Database.php';
+require_once __DIR__ . '/../models/Setting.php'; 
 
 class ProductController
 {
     private $laptopModel;
+    private $db; // Biến để lưu kết nối DB dùng chung
 
     public function __construct()
     {
@@ -14,23 +16,31 @@ class ProductController
             session_start();
         }
 
+        // Tạo kết nối DB
+        $this->db = (new Database())->getConnection();
+
         // Khởi tạo model Laptop
-        $this->laptopModel = new Laptop();
+        $this->laptopModel = new Laptop(); // Lưu ý: Laptop model của bạn có thể cần truyền $db vào constructor tùy cách bạn viết
 
         // Khởi tạo giỏ hàng nếu chưa có
         if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = []; // [laptop_id => quantity]
+            $_SESSION['cart'] = []; 
         }
     }
 
-    /**
-     * Trang danh sách sản phẩm
-     * Router: ?page=products
-     */
+    // Hàm hỗ trợ lấy Settings cho đỡ lặp code
+    private function getSettings() {
+        $settingModel = new Setting($this->db);
+        return $settingModel->all();
+    }
+
     public function index()
     {
+        // 2. Gọi hàm lấy settings
+        $settings = $this->getSettings(); 
+
         $keyword = isset($_GET['q']) ? trim($_GET['q']) : '';
-        $page    = isset($_GET['p']) ? max(1, (int)$_GET['p']) : 1; // dùng p để tránh trùng với page=route
+        $page    = isset($_GET['p']) ? max(1, (int)$_GET['p']) : 1;
         $limit   = 9;
         $offset  = ($page - 1) * $limit;
 
@@ -38,7 +48,6 @@ class ProductController
         $products    = $this->laptopModel->getAll($keyword, $limit, $offset);
         $total_pages = ($total > 0) ? ceil($total / $limit) : 1;
 
-        // Truyền data sang view
         $data = [
             'keyword'     => $keyword,
             'page'        => $page,
@@ -47,41 +56,41 @@ class ProductController
             'products'    => $products,
         ];
 
-        // View: app/views/products/index.php (bạn tự tạo)
+        // Biến $settings bây giờ đã tồn tại và sẽ được dùng trong footer.php
         include __DIR__ . '/../views/products/index.php';
     }
 
-    /**
-     * Trang chi tiết sản phẩm
-     * Router: ?page=product_detail&id=...
-     */
     public function detail()
     {
+        $settings = $this->getSettings(); // Lấy setting cho footer/header
+        
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if ($id <= 0) {
-            echo "Sản phẩm không hợp lệ";
-            return;
+            echo "Sản phẩm không hợp lệ"; return;
         }
 
         $product = $this->laptopModel->findById($id);
         if (!$product) {
-            http_response_code(404);
-            echo "Không tìm thấy sản phẩm";
-            return;
+            http_response_code(404); echo "Không tìm thấy sản phẩm"; return;
         }
 
-        $data = [
-            'product' => $product
-        ];
+        // --- CODE MỚI: Lấy 4 sản phẩm ngẫu nhiên làm "Sản phẩm liên quan" ---
+        // (Đây là query đơn giản, sau này bạn có thể query theo cùng brand_id)
+        $relatedProducts = [];
+        $sql = "SELECT * FROM laptops WHERE id != $id ORDER BY RAND() LIMIT 4";
+        $result = $this->db->query($sql);
+        if($result) {
+            while($row = $result->fetch_assoc()) { $relatedProducts[] = $row; }
+        }
+        // --------------------------------------------------------------------
 
-        // View: app/views/products/detail.php
+        // Truyền $product và $relatedProducts sang View
+        // Lưu ý: Không cần gói vào mảng $data nếu bạn dùng extract hoặc gọi trực tiếp $product ở view
+        // Nhưng để thống nhất với code cũ của bạn (dùng $product trực tiếp), ta chỉ cần include view.
+        
         include __DIR__ . '/../views/products/details.php';
     }
 
-    /**
-     * Thêm sản phẩm vào giỏ (method POST)
-     * Router: ?page=cart_add
-     */
     public function addToCart()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -97,7 +106,6 @@ class ProductController
             exit;
         }
 
-        // Kiểm tra sản phẩm tồn tại
         $product = $this->laptopModel->findById($productId);
         if (!$product) {
             header('Location: index.php?page=products');
@@ -113,13 +121,11 @@ class ProductController
         exit;
     }
 
-    /**
-     * Trang giỏ hàng + cập nhật giỏ (POST)
-     * Router: ?page=cart
-     */
     public function cart()
     {
-        // Xử lý POST: cập nhật / xóa / clear giỏ
+        // 4. Gọi hàm lấy settings cho trang giỏ hàng
+        $settings = $this->getSettings();
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $action = $_POST['action'] ?? '';
 
@@ -142,38 +148,37 @@ class ProductController
             exit;
         }
 
-        // Hiển thị giỏ hàng
         $cart_items = [];
         $total      = 0;
 
         if (!empty($_SESSION['cart'])) {
             $ids = array_map('intval', array_keys($_SESSION['cart']));
-            $ids_str = implode(',', $ids);
+            // Fix lỗi array rỗng khi query
+            if (!empty($ids)) {
+                $ids_str = implode(',', $ids);
+                // Dùng $this->db đã tạo ở constructor
+                $sql  = "SELECT * FROM laptops WHERE id IN ($ids_str)";
+                $result = $this->db->query($sql);
 
-            $db   = new Database();
-            $conn = $db->getConnection();
+                if ($result) {
+                    while ($row = $result->fetch_assoc()) {
+                        $id   = (int)$row['id'];
+                        $qty  = (int)$_SESSION['cart'][$id];
+                        $price = (float)$row['price'];
+                        $subtotal = $price * $qty;
+                        $total   += $subtotal;
 
-            $sql  = "SELECT * FROM laptops WHERE id IN ($ids_str)";
-            $result = $conn->query($sql);
-
-            if ($result) {
-                while ($row = $result->fetch_assoc()) {
-                    $id   = (int)$row['id'];
-                    $qty  = (int)$_SESSION['cart'][$id];
-                    $price = (float)$row['price']; // nếu sau này có sale_price thì sửa lại
-                    $subtotal = $price * $qty;
-                    $total   += $subtotal;
-
-                    $cart_items[] = [
-                        'id'        => $id,
-                        'name'      => $row['name'],
-                        'image'     => $row['image'],
-                        'price'     => $price,
-                        'qty'       => $qty,
-                        'subtotal'  => $subtotal
-                    ];
+                        $cart_items[] = [
+                            'id'        => $id,
+                            'name'      => $row['name'],
+                            'image'     => $row['image'],
+                            'price'     => $price,
+                            'qty'       => $qty,
+                            'subtotal'  => $subtotal
+                        ];
+                    }
+                    $result->free();
                 }
-                $result->free();
             }
         }
 
@@ -182,18 +187,12 @@ class ProductController
             'total' => $total
         ];
 
-        // View: app/views/cart/index.php
         include __DIR__ . '/../views/cart/index.php';
     }
 
-    /**
-     * (Tùy chọn) Trang checkout – nếu bạn muốn tạo đơn hàng luôn.
-     * Router: ?page=checkout
-     * Bạn có thể xử lý dùng model Order ở đây.
-     */
     public function checkout()
     {
-        // TODO: viết sau nếu cần, dùng model Order để tạo đơn hàng từ $_SESSION['cart']
+        $settings = $this->getSettings();
         echo "Checkout – bạn có thể hiện thực sau.";
     }
 }
