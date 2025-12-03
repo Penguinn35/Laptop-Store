@@ -28,4 +28,45 @@ public function findByUsernameOrEmail($login) {
     $stmt->bind_param('ssssss', $username, $password, $fullname, $email, $phone, $address);
     $stmt->execute();
   }
+
+  public function getAllUsers($currentUserId) {
+    // Truy vấn để hiển thị tất cả người dùng, loại trừ Admin hiện đang đăng nhập
+    $sql = "SELECT id, username, fullname, email, phone, role, status 
+            FROM users 
+            WHERE id != ? 
+            ORDER BY created_at DESC";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("i", $currentUserId);
+    $stmt->execute();
+
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public function resetPassword($id, $newHashedPassword) {
+    $sql = "UPDATE users SET password = ? WHERE id = ?";
+    
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("si", $newHashedPassword, $id);
+    
+    return $stmt->execute();
+  }
+
+  public function updateStatus($id, $status) {
+    $sql = "UPDATE users SET status = ? WHERE id = ?";
+    
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("ii", $status, $id);
+    
+    return $stmt->execute();
+  }
+  
+  public function updateRole($id, $role) {
+    $sql = "UPDATE users SET role = ? WHERE id = ?";
+    
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("si", $role, $id);
+    
+    return $stmt->execute();
+  }
 }
