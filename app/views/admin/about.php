@@ -9,12 +9,8 @@
         </div>
       </div>
     </div>
-    <button class="btn btn-sm btn-outline-primary position-absolute top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#editHeroModal">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-        <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"/>
-        <path d="M16.5 5.5a2.121 2.121 0 0 1 3 3l-10 10l-4 1l1 -4z"/>
-      </svg>
+    <button class="btn btn-outline-primary icon-btn position-absolute top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#editHeroModal" style="font-size:20px;">
+      <i class="fa-solid fa-pen"></i>
     </button>
   </div>
 
@@ -26,12 +22,8 @@
           <div class="card-text"><?= $settings['about_mission'] ?? 'Mission text...' ?></div>
         </div>
       </div>
-      <button class="btn btn-sm btn-outline-primary position-absolute top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#editMissionModal">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-          <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"/>
-          <path d="M16.5 5.5a2.121 2.121 0 0 1 3 3l-10 10l-4 1l1 -4z"/>
-        </svg>
+      <button class="btn btn-outline-primary icon-btn position-absolute top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#editMissionModal" style="font-size:20px;">
+        <i class="fa-solid fa-pen"></i>
       </button>
     </div>
     <div class="col-md-5 position-relative">
@@ -41,13 +33,9 @@
           <div class="about-values-list"><?= $settings['about_values'] ?? '<ul><li>Values...</li></ul>' ?></div>
         </div>
       </div>
-      <button class="btn btn-sm btn-outline-primary position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#editValuesModal">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-          <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"/>
-          <path d="M16.5 5.5a2.121 2.121 0 0 1 3 3l-10 10l-4 1l1 -4z"/>
-        </svg>
-    </button>
+      <button class="btn btn-outline-primary icon-btn position-absolute top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#editValuesModal" style="font-size:20px;">
+        <i class="fa-solid fa-pen"></i>
+      </button>
     </div>
   </div>
 
@@ -64,13 +52,9 @@
           <h5 class="mb-1"><?= htmlspecialchars($c['name']) ?></h5>
           <div class="text-muted mb-2"><?= htmlspecialchars($c['role']) ?></div>
           <p class="small text-muted"><?= htmlspecialchars($c['bio']) ?></p>
-          <button class="btn btn-sm btn-outline-primary position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#editCreatorModal<?= $c['id'] ?>">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-              <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"/>
-              <path d="M16.5 5.5a2.121 2.121 0 0 1 3 3l-10 10l-4 1l1 -4z"/>
-            </svg>
-        </button>
+          <button class="btn btn-outline-primary icon-btn position-absolute top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#editCreatorModal<?= $c['id'] ?>" style="font-size:20px;">
+            <i class="fa-solid fa-pen"></i>
+          </button>
         </div>
       <?php endforeach; ?>
     </div>
