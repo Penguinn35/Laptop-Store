@@ -25,7 +25,7 @@
                     <tr>
                         <td>
                             <div class="d-flex align-items-center">
-                                <img src="/images/products_img/<?=
+                                <img src="images/products_img/<?=
                                     htmlspecialchars($item['image'] ?? 'no-image.jpg', ENT_QUOTES, 'UTF-8'); ?>"
                                     alt=""
                                     style="width:60px;height:60px;object-fit:cover;" class="me-2">

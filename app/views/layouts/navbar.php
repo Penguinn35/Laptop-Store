@@ -4,6 +4,13 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 $isLoggedIn = isset($_SESSION['user']);
 $user = $_SESSION['user'] ?? null;
+
+    $cartCount = 0;
+    if (isset($_SESSION['cart'])) {
+        foreach ($_SESSION['cart'] as $qty) {
+            $cartCount += $qty;
+        }
+    }
 ?>
 
 
@@ -22,12 +29,12 @@ $user = $_SESSION['user'] ?? null;
 
     <!-- Nav links -->
     <ul class="myNav-links" id="navLinks">
-      <li><a href="/laptop_store/public/index.php?page=home">Trang chủ</a></li>
-      <li><a href="/laptop_store/public/index.php?page=products">Sản phẩm</a></li>
-      <li><a href="/laptop_store/public/index.php?page=news">Tin tức</a></li>
-      <li><a href="/laptop_store/public/index.php?page=contact">Liên hệ</a></li>
-      <li><a href="/laptop_store/public/index.php?page=faq">FAQ</a></li>
-      <li><a href="/laptop_store/public/index.php?page=about">Về chúng tôi</a></li>
+      <li><a href="index.php?page=home">Trang chủ</a></li>
+      <li><a href="index.php?page=products">Sản phẩm</a></li>
+      <li><a href="index.php?page=news">Tin tức</a></li>
+      <li><a href="index.php?page=contact">Liên hệ</a></li>
+      <li><a href="index.php?page=faq">FAQ</a></li>
+      <li><a href="index.php?page=about">Về chúng tôi</a></li>
       <li class="mobile-user">
         <?php if (!$isLoggedIn): ?>
           <button id="loginBtn_mobile" class="btn-small">Đăng nhập</button>
@@ -46,7 +53,7 @@ $user = $_SESSION['user'] ?? null;
     <div class="user">
       <?php if ($isLoggedIn): ?>
         <?php if ($user['role'] === 'admin'): ?>
-          <a href="/laptop_store/public/index.php?page=admin" class="btn-small admin-btn">Dashboard</a>
+          <a href="index.php?page=admin" class="btn-small admin-btn">Dashboard</a>
         <?php endif; ?>
 
         <div class="user-menu">
@@ -54,7 +61,7 @@ $user = $_SESSION['user'] ?? null;
           <div class="userGrap">
             <?php
               $avatar = $user['avatar'] ?? '';
-              $avatarUrl = $avatar ? "/laptop_store/public/avatars/" . htmlspecialchars($avatar) : '';
+              $avatarUrl = $avatar ? "avatars/" . htmlspecialchars($avatar) : '';
             ?>
             <?php if ($avatarUrl): ?>
               <img src="<?= $avatarUrl ?>" alt="Avatar" id="userDropdown" class="rounded-circle" style="width:36px;height:36px;object-fit:cover;">
@@ -69,8 +76,8 @@ $user = $_SESSION['user'] ?? null;
             </div>
           </div>
           <div class="dropdown" id="dropdownMenu">
-            <a href="/laptop_store/public/index.php?page=profile">Thay đổi thông tin</a>
-            <a href="/laptop_store/public/index.php?page=logout">Đăng xuất</a>
+            <a href="index.php?page=profile">Thay đổi thông tin</a>
+            <a href="index.php?page=logout">Đăng xuất</a>
           </div>
         </div>
 
@@ -80,6 +87,16 @@ $user = $_SESSION['user'] ?? null;
 
 
       <?php endif; ?>
+
+      <div class="nav-item me-3">
+          <a href="index.php?page=cart" class="btn btn-outline-dark position-relative border-0">
+              <i class="fas fa-shopping-cart fa-lg"></i>
+              <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" 
+                    style="<?php echo $cartCount > 0 ? '' : 'display:none'; ?>">
+                  <?= $cartCount ?>
+              </span>
+          </a>
+      </div>
 
     </div>
 
