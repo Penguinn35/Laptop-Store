@@ -87,6 +87,28 @@
             <div class="py-3"><?= nl2br($product['description'] ?? '') ?></div>
         </div>
     </div>
+
+    <?php if (!empty($relatedProducts)): ?>
+    <div class="row mt-5">
+        <h3 class="mb-4">Sản phẩm khác có thể bạn thích</h3>
+        <?php foreach ($relatedProducts as $rp): ?>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="card h-100">
+                    <div class="p-3" style="height: 180px; display: flex; align-items: center; justify-content: center;">
+                        <img src="images/products_img/<?= htmlspecialchars($rp['image']) ?>" 
+                            alt="<?= htmlspecialchars($rp['name']) ?>"
+                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-title text-truncate"><?= htmlspecialchars($rp['name']) ?></h6>
+                        <p class="text-danger fw-bold mb-2"><?= number_format($rp['price']) ?> ₫</p>
+                        <a href="index.php?page=product_detail&id=<?= $rp['id'] ?>" class="btn btn-outline-primary btn-sm w-100">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
 </div>
 
 <?php include __DIR__ . '/../layouts/footer.php'; ?>
