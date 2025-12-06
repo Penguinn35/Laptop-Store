@@ -43,7 +43,11 @@ CREATE TABLE laptops (
 CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
-    total_price DECIMAL(10,2),
+    full_name VARCHAR(100),
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    address VARCHAR(255),
+    total_amount DECIMAL(10,2),
     status ENUM('pending','confirmed','shipped','done','cancelled') DEFAULT 'pending',
     note VARCHAR(255),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -55,7 +59,7 @@ CREATE TABLE order_items (
     order_id INT,
     laptop_id INT,
     quantity INT DEFAULT 1,
-    price DECIMAL(10,2),
+    unit_price DECIMAL(10,2),
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
     FOREIGN KEY (laptop_id) REFERENCES laptops(id)
 );
