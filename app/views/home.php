@@ -66,7 +66,8 @@
       </div>
     </div>
   </section>
-  <section class="products">
+
+  <!-- <section class="products">
     <h1>Sản phẩm nổi bật</h1>
 
     <div class="product-row">
@@ -95,9 +96,94 @@
       </div>
 
     </div>
+  </section> -->
+
+  <section class="products">
+    <h1>Sản phẩm nổi bật</h1>
+
+    <div class="product-row">
+      <?php foreach ($products as $p): ?>
+        <div class="col">
+          <div class="card h-100 shadow-md border-0 product-card">
+            <div class="position-relative overflow-hidden p-3" style="height: 200px; background: #fff;">
+              <a href="index.php?page=product_detail&id=<?= $p['id'] ?>">
+                <img src="images/products_img/<?= htmlspecialchars($p['image'] ?? 'no-image.jpg') ?>"
+                  alt="<?= htmlspecialchars($p['name']) ?>"
+                  style="width: 100%; height: 100%; object-fit: contain;">
+              </a>
+              <?php if ($p['stock'] <= 0): ?>
+                <div class="position-absolute top-50 start-50 translate-middle bg-dark text-white px-3 py-1 rounded opacity-75 fw-bold">
+                  HẾT HÀNG
+                </div>
+              <?php endif; ?>
+            </div>
+
+            <div class="card-body d-flex flex-column">
+              <h6 class="card-title text-truncate mb-2">
+                <a href="index.php?page=product_detail&id=<?= $p['id'] ?>" class="text-decoration-none text-dark fw-bold" title="<?= htmlspecialchars($p['name']) ?>">
+                  <?= htmlspecialchars($p['name']) ?>
+                </a>
+              </h6>
+
+              <div class="small text-muted mb-3">
+                <div class="d-flex align-items-center mb-1">
+                  <i class="fas fa-microchip me-2" style="width: 16px;"></i>
+                  <span class="text-truncate"><?= htmlspecialchars($p['cpu'] ?? '') ?></span>
+                </div>
+                <div class="d-flex align-items-center mb-1">
+                  <i class="fas fa-memory me-2" style="width: 16px;"></i>
+                  <span><?= htmlspecialchars($p['ram'] ?? '') ?></span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-hdd me-2" style="width: 16px;"></i>
+                  <span><?= htmlspecialchars($p['storage'] ?? '') ?></span>
+                </div>
+              </div>
+
+              <div class="mt-auto">
+                <p class="card-text mb-2">
+                  <?php if ($p['stock'] > 0): ?>
+                    <span class="text-danger fw-bold fs-5"><?= number_format($p['price']) ?> đ</span>
+                  <?php else: ?>
+                    <span class="text-muted text-decoration-line-through"><?= number_format($p['price']) ?> đ</span>
+                    <span class="text-danger fw-bold ms-2">Liên hệ</span>
+                  <?php endif; ?>
+                </p>
+
+                <div class="d-grid gap-2">
+                  <a href="index.php?page=product_detail&id=<?= $p['id'] ?>" class="btn btn-outline-secondary btn-sm">
+                    Xem chi tiết
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    </div>
   </section>
+  <section class="newsContainer">
+    <h1>Tin tức mới nhất</h1>
 
+    <div class="news-list">
+      <?php foreach ($posts as $post): ?>
+        <div class="post">
+          <img src="/laptop_store/public/images/posts_img/<?= $post['thumbnail'] ?>" alt="thumbnail">
+          <div>
+            <h3><a href="/laptop_store/public/index.php?page=news_detail&slug=<?= $post['slug'] ?>">
+                <?= htmlspecialchars($post['title']) ?>
+              </a></h3>
+            <p><?= htmlspecialchars($post['description']) ?></p>
+            <small><?= $post['created_at'] ?></small>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    </div>
 
+    <div style="text-align: center; margin-top: 20px;">
+      <a href="/laptop_store/public/index.php?page=news" class="btn btn-primary">Xem tất cả tin tức</a>
+    </div>
+  </section>
 
 
 
