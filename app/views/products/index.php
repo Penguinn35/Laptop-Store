@@ -4,74 +4,97 @@
 <div class="container py-4" style="margin-top: 120px;">
     <h1 class="mb-3">Laptop</h1>
 
-    <form class="row g-2 mb-3" method="get" action="index.php">
-        <input type="hidden" name="page" value="products"> 
-        <div class="col-sm-10">
+    <h1 class="mb-4 text-center fw-bold text-uppercase">Danh sách Laptop</h1>
+
+    <form class="row justify-content-center g-2 mb-5" method="get" action="index.php">
+        <input type="hidden" name="page" value="products">
+        <div class="col-md-6 col-8">
             <input type="text" name="q" class="form-control"
-                   placeholder="Tìm kiếm laptop theo tên, hãng..."
+                   placeholder="Nhập tên laptop, hãng sản xuất..."
                    value="<?php echo htmlspecialchars($keyword); ?>">
         </div>
-        <div class="col-sm-2 d-grid">
-            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        <div class="col-md-2 col-4">
+            <button type="submit" class="btn btn-primary w-100"><i class="fas fa-search"></i> Tìm kiếm</button>
         </div>
     </form>
 
     <?php if (empty($products)): ?>
-        <p>Không tìm thấy sản phẩm.</p>
+        <div class="alert alert-info text-center">Không tìm thấy sản phẩm nào phù hợp.</div>
     <?php else: ?>
-        <div class="row">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             <?php foreach ($products as $p): ?>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <img src="images/products_img/<?php echo htmlspecialchars($p['image'] ?? 'no-image.jpg', ENT_QUOTES, 'UTF-8'); ?>"
-                            class="card-img-top"
-                            alt="<?php echo htmlspecialchars($p['name'] ?? 'Laptop', ENT_QUOTES, 'UTF-8'); ?>">
-                            
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0 product-card">
+                        
+                        <div class="position-relative overflow-hidden p-3" style="height: 200px; background: #fff;">
+                            <a href="index.php?page=product_detail&id=<?= $p['id'] ?>">
+                                <img src="images/products_img/<?= htmlspecialchars($p['image'] ?? 'no-image.jpg') ?>"
+                                     alt="<?= htmlspecialchars($p['name']) ?>"
+                                     style="width: 100%; height: 100%; object-fit: contain;">
+                            </a>
+                            <?php if ($p['stock'] <= 0): ?>
+                                <div class="position-absolute top-50 start-50 translate-middle bg-dark text-white px-3 py-1 rounded opacity-75 fw-bold">
+                                    HẾT HÀNG
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title"><?php echo htmlspecialchars($p['name']); ?></h5>
-                            <p class="card-text mb-1">
-                                <?php if (!empty($p['sale_price'])): ?>
-                                    <span class="text-danger fw-bold">
-                                        <?php echo number_format($p['sale_price']); ?> đ
-                                    </span>
-                                    <small class="text-muted text-decoration-line-through">
-                                        <?php echo number_format($p['price']); ?> đ
-                                    </small>
-                                <?php else: ?>
-                                    <span class="fw-bold">
-                                        <?php echo number_format($p['price']); ?> đ
-                                    </span>
-                                <?php endif; ?>
-                            </p>
-                            <div class="mt-auto d-flex gap-2">
-                                <a href="index.php?page=product_detail&id=<?php echo (int)$p['id']; ?>"
-                                   class="btn btn-outline-primary btn-sm">
-                                    Xem chi tiết
+                            <h6 class="card-title text-truncate mb-2">
+                                <a href="index.php?page=product_detail&id=<?= $p['id'] ?>" class="text-decoration-none text-dark fw-bold" title="<?= htmlspecialchars($p['name']) ?>">
+                                    <?= htmlspecialchars($p['name']) ?>
                                 </a>
+                            </h6>
+
+                            <div class="small text-muted mb-3">
+                                <div class="d-flex align-items-center mb-1">
+                                    <i class="fas fa-microchip me-2" style="width: 16px;"></i> 
+                                    <span class="text-truncate"><?= htmlspecialchars($p['cpu'] ?? '') ?></span>
+                                </div>
+                                <div class="d-flex align-items-center mb-1">
+                                    <i class="fas fa-memory me-2" style="width: 16px;"></i>
+                                    <span><?= htmlspecialchars($p['ram'] ?? '') ?></span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-hdd me-2" style="width: 16px;"></i>
+                                    <span><?= htmlspecialchars($p['storage'] ?? '') ?></span>
+                                </div>
+                            </div>
+
+                            <div class="mt-auto">
+                                <p class="card-text mb-2">
+                                    <?php if ($p['stock'] > 0): ?>
+                                        <span class="text-danger fw-bold fs-5"><?= number_format($p['price']) ?> đ</span>
+                                    <?php else: ?>
+                                        <span class="text-muted text-decoration-line-through"><?= number_format($p['price']) ?> đ</span>
+                                        <span class="text-danger fw-bold ms-2">Liên hệ</span>
+                                    <?php endif; ?>
+                                </p>
                                 
-                                <form method="post" action="index.php?page=cart_add" class="d-inline">
-                                    <input type="hidden" name="product_id" value="<?php echo $p['id']; ?>">
-                                    <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="btn btn-primary btn-sm">
-                                        Thêm vào giỏ
-                                    </button>
-                                </form>
+                                <div class="d-grid gap-2">
+                                    <a href="index.php?page=product_detail&id=<?= $p['id'] ?>" class="btn btn-outline-secondary btn-sm">
+                                        Xem chi tiết
+                                    </a>
+
+                                    <?php if ($p['stock'] > 0): ?>
+                                        <button type="button" class="btn btn-primary btn-sm add-to-cart-btn" data-id="<?= $p['id'] ?>">
+                                            <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
-
+        
         <?php if ($total_pages > 1): ?>
-            <nav>
-                <ul class="pagination">
+            <nav class="mt-5">
+                <ul class="pagination justify-content-center">
                     <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                        <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                            <a class="page-link"
-                               href="index.php?page=products&p=<?php echo $i; ?>&q=<?php echo urlencode($keyword); ?>">
-                                <?php echo $i; ?>
-                            </a>
+                        <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                            <a class="page-link" href="index.php?page=products&p=<?= $i ?>&q=<?= urlencode($keyword) ?>"><?= $i ?></a>
                         </li>
                     <?php endfor; ?>
                 </ul>

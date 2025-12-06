@@ -37,7 +37,7 @@ class ProductController
 
         $keyword = isset($_GET['q']) ? trim($_GET['q']) : '';
         $page    = isset($_GET['p']) ? max(1, (int)$_GET['p']) : 1;
-        $limit   = 9;
+        $limit   = 8;
         $offset  = ($page - 1) * $limit;
 
         $total       = $this->laptopModel->countAll($keyword);
@@ -52,8 +52,19 @@ class ProductController
             'products'    => $products,
         ];
 
-        // Biến $settings bây giờ đã tồn tại và sẽ được dùng trong footer.php
-        include __DIR__ . '/../views/products/index.php';
+        // --- SEO ĐƠN GIẢN ---
+        // Tạo tiêu đề động
+        if ($keyword) {
+            $pageTitle = "Tìm kiếm: " . htmlspecialchars($keyword) . " | Laptop Store";
+        } else {
+            $pageTitle = "Danh sách Laptop chính hãng giá tốt | Laptop Store";
+        }
+        
+        // Tạo meta description (để google hiển thị)
+        $metaDesc = "Mua laptop chính hãng Dell, Asus, HP, Acer giá rẻ nhất thị trường. Bảo hành uy tín, trả góp 0%.";
+
+        // Truyền biến $pageTitle và $metaDesc sang view (header.php sẽ dùng)
+        require_once __DIR__ . '/../views/products/index.php';
     }
 
     public function detail()
@@ -89,23 +100,27 @@ class ProductController
 
     public function addToCart()
     {
+        // 1. Kiểm tra xem có phải yêu cầu AJAX không (dựa vào tham số ?ajax=1)
+        $isAjax = isset($_GET['ajax']) && $_GET['ajax'] == 1;
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: index.php?page=products');
-            exit;
+            if ($isAjax) { echo json_encode(['status' => 'error', 'message' => 'Invalid Request']); exit; }
+            header('Location: index.php?page=products'); exit;
         }
 
         $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
         $qty       = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
 
-        if ($productId <= 0 || $qty <= 0) {
-            header('Location: index.php?page=products');
-            exit;
+        // Xử lý nếu client gửi JSON (fetch api)
+        if ($productId === 0) {
+            $input = json_decode(file_get_contents('php://input'), true);
+            $productId = $input['product_id'] ?? 0;
+            $qty = $input['quantity'] ?? 1;
         }
 
-        $product = $this->laptopModel->findById($productId);
-        if (!$product) {
-            header('Location: index.php?page=products');
-            exit;
+        if ($productId <= 0) {
+            if ($isAjax) { echo json_encode(['status' => 'error', 'message' => 'Sản phẩm không hợp lệ']); exit; }
+            header('Location: index.php?page=products'); exit;
         }
 
         if (!isset($_SESSION['cart'][$productId])) {
@@ -113,6 +128,24 @@ class ProductController
         }
         $_SESSION['cart'][$productId] += $qty;
 
+        // Tính tổng số lượng để cập nhật Badge
+        $totalQty = 0;
+        foreach ($_SESSION['cart'] as $q) {
+            $totalQty += $q;
+        }
+
+        // 2. Trả về JSON nếu là AJAX
+        if ($isAjax) {
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'success', 
+                'message' => 'Đã thêm vào giỏ hàng',
+                'total_qty' => $totalQty
+            ]);
+            exit; // Dừng code tại đây
+        }
+
+        // Nếu không phải ajax (fallback) thì chuyển trang như cũ
         header('Location: index.php?page=cart');
         exit;
     }
