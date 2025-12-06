@@ -187,6 +187,12 @@ class Router
                 require_once "../app/controllers/AdminOrderController.php";
                 (new AdminOrderController())->view();
                 break;
+
+            // Quan lý người dùng
+            case 'admin_manage':
+                require_once "../app/controllers/AdminController.php";
+                (new AdminController())->user();
+                break;
         }
     }
 }

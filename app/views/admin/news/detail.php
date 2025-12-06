@@ -1,5 +1,5 @@
 <script src="/laptop_store/public/js/libs/tinymce/tinymce.min.js"></script>
-<div class="content-wrapper" style="padding: 30px; padding-top: 30px;"> 
+<div class="content-wrapper" style="padding: 30px; padding-top: 120px;"> 
     
     <div class="page-header d-print-none">
         <h2 class="page-title"><?= $pageTitle ?></h2>
