@@ -101,9 +101,10 @@ INSERT INTO posts (title, slug, description, content, thumbnail, keywords, creat
 );
 
 -- Dữ liệu bảng comments
-INSERT INTO comments (user_id, laptop_id, content, rating) VALUES
-(2, 1, 'Máy chạy rất mượt, pin trâu!', 5),
-(3, 2, 'Chơi game ổn, nhưng hơi nặng.', 4);
+-- INSERT INTO comments (user_id, laptop_id, content, rating) VALUES
+-- (2, 1, 'Máy chạy rất mượt, pin trâu!', 5),
+-- (3, 2, 'Chơi game ổn, nhưng hơi nặng.', 4);
+
 
 -- Dữ liệu bảng contacts
 INSERT INTO contacts (name, email, subject, message) VALUES
@@ -136,10 +137,12 @@ INSERT INTO settings (`key`, `value`) VALUES
 ('company_phone','0123456789'),
 ('company_email','contact@laptopstore.vn'),
 ('company_logo', 'logo.png'),
+('about_banner', 'about_banner.jpg'),
 ('about_title', 'Về Chúng Tôi'),
 ('about_subtitle', 'Khám phá câu chuyện và giá trị cốt lõi của Laptop Store Việt Nam'),
 ('about_mission', 'Tại Laptop Store Việt Nam, sứ mệnh của chúng tôi là cung cấp những sản phẩm laptop chất lượng cao với giá cả hợp lý, đồng thời mang đến dịch vụ khách hàng xuất sắc. Chúng tôi cam kết không ngừng cải tiến và đổi mới để đáp ứng nhu cầu ngày càng cao của khách hàng.<br><br>Chúng tôi tin rằng công nghệ có thể thay đổi cuộc sống và chúng tôi muốn là cầu nối giúp khách hàng tiếp cận với những sản phẩm tốt nhất trên thị trường. Sự hài lòng của khách hàng luôn là ưu tiên hàng đầu của chúng tôi.'),
-('about_values', 'vvvas');
+('about_values', '<ul class="list-group list-group-flush"><li class="list-group-item"><strong>Chất Lượng:</strong> Chỉ cung cấp sản phẩm đạt tiêu chuẩn cao nhất.</li><li class="list-group-item"><strong>Đổi Mới:</strong> Luôn cập nhật công nghệ mới nhất.</li><li class="list-group-item"><strong>Dịch Vụ:</strong> Hỗ trợ và phục vụ khách hàng tận tâm.</li><li class="list-group-item"><strong>Trách Nhiệm:</strong> Đóng góp tích cực cho cộng đồng.</li></ul>');
+
 
 -- Dữ liệu bảng creators
 INSERT INTO creators (name, bio, role, profile_image) VALUES

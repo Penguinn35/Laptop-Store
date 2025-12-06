@@ -38,6 +38,21 @@
 .btn > svg.icon {
   margin: 0;
 }
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 6px;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.icon-btn.btn-outline-primary {
+  padding: 0;
+}
 
 .about-page-creators { padding: 10px 0 10px 0; }
 .about-page-creators .card-title { margin-bottom: 15px; font-size: 24px; font-weight: bold; text-align: center; }
@@ -81,12 +96,6 @@
 
 .nav-links {
   margin-bottom: 0;
-}
-
-.userText {
-  p {
-    margin-top: 16px;
-  }
 }
 
 .userRound {

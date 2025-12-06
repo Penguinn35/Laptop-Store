@@ -24,7 +24,11 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-vi-VN.js"></script>
 
-    <script src="js/cart.js"></script>
+    <!-- CSS riêng cho từng trang -->
+    <?php if (!empty($pageCss)): ?>
+        <link rel="stylesheet" href="/laptop_store/public/css/<?= $pageCss ?>.css">
+    <?php endif; ?>
+
 </head>
 
 <body>

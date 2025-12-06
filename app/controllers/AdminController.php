@@ -4,6 +4,9 @@ require_once "../app/core/Database.php";
 require_once "../app/models/Setting.php";
 require_once "../app/models/FAQ.php";
 require_once "../app/models/Creator.php";
+require_once "../app/models/Posts.php";
+require_once "../app/models/Comments.php";
+require_once "../app/models/User.php";
 
 class AdminController
 {
@@ -144,6 +147,62 @@ class AdminController
         exit;
     }
 
+    public function user()
+    {
+        Auth::requireAdmin();
+        $userModel = new User($this->db);
+        
+        $currentUserId = $_SESSION['user']['id'] ?? 0;  
+        // Xử lý Hành động (Khóa, Mở khóa, Reset Mật khẩu, Phân quyền)
+        if (isset($_GET['action']) && isset($_GET['id'])) {
+            $id = (int)$_GET['id'];
+            $success = false;
+            $action = $_GET['action'];
+            $message = "Thao tác thất bại.";
+
+            switch ($action) {
+                case 'lock':
+                    $success = $userModel->updateStatus($id, 0); // 0: Khóa
+                    $message = $success ? "Đã khóa người dùng thành công." : $message;
+                    break;
+                case 'unlock':
+                    $success = $userModel->updateStatus($id, 1); // 1: Mở
+                    $message = $success ? "Đã mở khóa người dùng thành công." : $message;
+                    break;
+                case 'reset_password':
+                    $newPassword = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 6); // Tạo mật khẩu 6 ký tự
+                    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                    $success = $userModel->resetPassword($id, $hashedPassword);
+                    
+                    if ($success) {
+                        // Cần hiển thị mật khẩu mới cho Admin (trong môi trường thực tế nên gửi qua email)
+                        $message = "Đã Reset mật khẩu thành công! Mật khẩu mới: **{$newPassword}** (Hãy thông báo cho người dùng).";
+                    }
+                    break;
+                case 'set_admin':
+                case 'set_customer':
+                    $newRole = ($action === 'set_admin') ? 'admin' : 'customer';
+                    $success = $userModel->updateRole($id, $newRole);
+                    $message = $success ? "Đã cập nhật vai trò thành {$newRole}." : $message;
+                    break;
+            }
+
+            if ($success) {
+                $_SESSION['admin_message'] = $message;
+            }
+            
+            header("Location: /laptop_store/public/index.php?page=admin_manage"); 
+            exit();
+        }
+        
+        // Load Dữ liệu và View
+        $pageTitle = "Quản lý Người dùng";
+        $useTabler = true;    
+        $users = $userModel->getAllUsers($currentUserId);
+        
+        include "../app/views/layouts/header.php";
+        include "../app/views/admin/users.php";
+    }
 
     public function about()
     {
@@ -208,6 +267,145 @@ class AdminController
 
         header("Location: /laptop_store/public/index.php?page=admin_about");
         exit;
+    }
+
+    public function news(){
+        Auth::requireAdmin();
+        $postModel = new Posts($this->db);
+        $commentModel = new Comments($this->db);
+
+        if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+            $id = (int)$_GET['id'];
+
+            $commentModel->deleteCommentsByPostId($id);
+            if ($postModel->deletePost($id)) {
+                $_SESSION['admin_message'] = "Đã xóa bài viết thành công!";
+            } else {
+                $_SESSION['admin_message'] = "Lỗi: Không thể xóa bài viết.";
+            }
+            header("Location: /laptop_store/public/index.php?page=admin_news");
+            exit();
+        }
+
+        $limit = 5;
+
+        $page = isset($_GET['count']) ? (int)$_GET['count'] : 1;
+        if ($page < 1) $page = 1;
+
+        $offset = ($page - 1) * $limit;
+
+        $posts = $postModel->getPosts($limit, $offset);
+
+        $total = $postModel->countPosts();
+
+        $totalPages = ceil($total / $limit);
+
+        $pageTitle = "Quản Lý Bài Viết";
+        $useTabler = true;
+        include "../app/views/layouts/header.php";
+        include "../app/views/admin/news/lists.php";
+    }
+
+    public function newsDetail(){
+        Auth::requireAdmin();
+        $postModel = new Posts($this->db);
+        $commentModel = new Comments($this->db);
+
+        $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
+        $post = null;
+        $postErrors = [];
+        $comments = [];
+
+        if ($id && isset($_GET['comment_action']) && isset($_GET['comment_id'])) {
+            $commentId = (int)$_GET['comment_id'];
+            $success = false;
+
+            if ($_GET['comment_action'] === 'remove') {
+                $success = $commentModel->setCommentStatus($commentId, 0); // 0: Gỡ
+                $message = "Đã gỡ bình luận thành công.";
+            } elseif ($_GET['comment_action'] === 'approve') {
+                $success = $commentModel->setCommentStatus($commentId, 1); // 1: Phục hồi
+                $message = "Đã phục hồi bình luận thành công.";
+            }
+            
+            if ($success) {
+                $_SESSION['admin_message'] = $message;
+            } else {
+                $_SESSION['admin_message'] = "Thao tác bình luận thất bại.";
+            }
+            // Chuyển hướng về chính form sửa bài viết để cập nhật danh sách bình luận
+            header("Location: /laptop_store/public/index.php?page=admin_news_detail&id=" . $id . "#comment-list"); 
+            exit();
+        }
+        
+        if ($id) {
+            $post = $postModel->getPostById($id);
+            $pageTitle = "Sửa Bài viết: " . ($post['title'] ?? '');
+            if (!$post) {
+                header("Location: /laptop_store/public/index.php?page=admin_news"); exit();
+            }
+        } else {
+            $pageTitle = "Thêm Bài viết Mới";
+        }
+        
+        // --- Xử lý POST Form ---
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // 1. Lấy dữ liệu
+            $data = [
+                'title' => trim($_POST['title'] ?? ''),
+                'slug' => trim($_POST['slug'] ?? ''),
+                'description' => trim($_POST['description'] ?? ''),
+                'content' => $_POST['content'] ?? '',
+                'keywords' => trim($_POST['keywords'] ?? ''),
+                // Thumbnail sẽ được xử lý riêng
+                'thumbnail' => $post['thumbnail'] ?? null // Giữ lại ảnh cũ nếu không upload ảnh mới
+            ];
+
+            // 2. Validation (PHP thuần)
+            if (empty($data['title'])) $postErrors[] = "Tiêu đề không được để trống.";
+            if (empty($data['slug'])) $postErrors[] = "Slug không được để trống.";
+
+            // 3. Xử lý Upload Hình ảnh
+            if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] === UPLOAD_ERR_OK) {
+                $uploadDir = '../public/images/posts_img/'; // Đảm bảo thư mục này tồn tại
+                $fileName = time() . '_' . basename($_FILES['thumbnail']['name']);
+                $targetFile = $uploadDir . $fileName;
+
+                if (move_uploaded_file($_FILES['thumbnail']['tmp_name'], $targetFile)) {
+                    $data['thumbnail'] = $fileName;
+                    // Xóa ảnh cũ nếu đang sửa và có ảnh cũ
+                    if ($id && $post['thumbnail'] && file_exists($uploadDir . $post['thumbnail'])) {
+                        unlink($uploadDir . $post['thumbnail']);
+                    }
+                } else {
+                    $postErrors[] = "Lỗi khi upload ảnh đại diện.";
+                }
+            } else if (!$id && empty($data['thumbnail'])) {
+                 $postErrors[] = "Ảnh đại diện là bắt buộc khi thêm mới.";
+            }
+
+            // 4. Thực thi CRUD
+            if (empty($postErrors)) {
+                $result = $id ? $postModel->updatePost($id, $data) : $postModel->createPost($data);
+
+                if ($result) {
+                    $_SESSION['admin_message'] = $id ? "Cập nhật bài viết thành công!" : "Thêm bài viết mới thành công!";
+                    header("Location: /laptop_store/public/index.php?page=admin_news");
+                    exit();
+                } else {
+                    $postErrors[] = "Lỗi Database: Không thể thực hiện thao tác.";
+                }
+            }
+        }
+
+        if ($id) {
+            $comments = $commentModel->getAllCommentsByPostId($id);
+        }
+
+        $pageTitle = $id ? "Sửa Bài viết: " . ($post['title'] ?? '') : "Thêm Bài viết Mới";
+        $useTabler = true;
+        include "../app/views/layouts/header.php";
+        include "../app/views/admin/news/detail.php";
     }
 
     public function faqs()

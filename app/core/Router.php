@@ -24,9 +24,25 @@ class Router
                 include "../app/controllers/ContactController.php";
                 (new ContactController())->index();
                 break;
+            
+            # Trang tin tức
             case 'news':
                 require_once "../app/controllers/NewsController.php";
                 (new NewsController())->index();
+                break;
+            case 'news_detail':
+                require_once "../app/controllers/NewsController.php";
+                (new NewsController())->detail();
+                break;
+
+            # Quản lý tin tức - Admin
+            case 'admin_news':
+                require_once "../app/controllers/AdminController.php";
+                (new AdminController())->news();
+                break;
+            case 'admin_news_detail':
+                require_once "../app/controllers/AdminController.php";
+                (new AdminController())->newsDetail();
                 break;
 
             case 'admin_contacts':
@@ -170,6 +186,12 @@ class Router
             case 'admin_order_view':
                 require_once "../app/controllers/AdminOrderController.php";
                 (new AdminOrderController())->view();
+                break;
+
+            // Quan lý người dùng
+            case 'admin_manage':
+                require_once "../app/controllers/AdminController.php";
+                (new AdminController())->user();
                 break;
         }
     }

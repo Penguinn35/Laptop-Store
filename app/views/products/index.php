@@ -1,13 +1,8 @@
 <?php include __DIR__ . '/../layouts/header.php'; ?>
 <?php include __DIR__ . '/../layouts/navbar.php'; ?>
 
-<div class="container py-4">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.php">Trang chủ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Sản phẩm</li>
-        </ol>
-    </nav>
+<div class="container py-4" style="margin-top: 120px;">
+    <h1 class="mb-3">Laptop</h1>
 
     <h1 class="mb-4 text-center fw-bold text-uppercase">Danh sách Laptop</h1>
 
