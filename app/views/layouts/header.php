@@ -35,5 +35,5 @@
 
     <?php include __DIR__ . "/navbar.php"; ?>
     <?php if (!empty($pageJs)): ?>
-        <script src="/js/<?= $pageJs ?>.js"></script>
+        <script src="js/<?= $pageJs ?>.js"></script>
     <?php endif; ?>
