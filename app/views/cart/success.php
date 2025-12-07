@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/../layouts/header.php'; ?>
 
-<div class="container py-5 text-center">
+<div class="container py-5 text-center" style="margin-top:120px; min-height: calc(100vh - 380px)">
     <div class="card shadow-sm border-0 py-5" style="max-width: 600px; margin: auto;">
         <div class="card-body">
             <div class="text-success mb-3">

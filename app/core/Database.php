@@ -4,7 +4,7 @@ class Database {
   private $user = "root";
   private $pass = "";
   private $db = "laptop_store";
-  private $port = 3307;
+  private $port = 3306;
   private $conn;
 
   public function getConnection() {
