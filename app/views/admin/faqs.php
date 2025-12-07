@@ -3,12 +3,12 @@
     <div class="container-xl">
       <div class="row g-2 align-items-center">
         <div class="col">
-          <h2 class="page-title">FAQs Management</h2>
+          <h2 class="page-title">Quản lý FAQ</h2>
         </div>
         <div class="col-auto ms-auto d-print-none">
           <div class="btn-list">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFaqModal">
-              Add FAQ
+              Thêm FAQ
             </button>
           </div>
         </div>
@@ -26,9 +26,9 @@
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Question</th>
-                <th>Type</th>
-                <th>Actions</th>
+                <th>Câu hỏi</th>
+                <th>Loại câu hỏi</th>
+                <th>Câu trả lời</th>
               </tr>
             </thead>
             <tbody>
@@ -56,34 +56,34 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Add FAQ</h5>
+        <h5 class="modal-title">Thêm FAQ</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="?page=faq_save" method="post">
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label">Question</label>
+            <label class="form-label">Câu hỏi</label>
             <input type="text" class="form-control" name="question" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">Type</label>
+            <label class="form-label">Loại câu hỏi</label>
             <div class="input-group">
               <select class="form-select" name="type" required>
                 <?php foreach ($types as $t): ?>
                 <option value="<?= htmlspecialchars($t) ?>"><?= htmlspecialchars($t) ?></option>
                 <?php endforeach; ?>
               </select>
-              <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#addTypeModal">Add New</button>
+              <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#addTypeModal">Thêm mới</button>
             </div>
           </div>
           <div class="mb-3">
-            <label class="form-label">Answer</label>
+            <label class="form-label">Câu trả lời</label>
             <textarea class="form-control" name="answer" required></textarea>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn me-auto" data-bs-dismiss="modal">Đóng</button>
+          <button type="submit" class="btn btn-primary">Lưu</button>
         </div>
       </form>
     </div>

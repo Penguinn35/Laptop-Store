@@ -92,7 +92,8 @@ class ProfileController {
 
         $avatarName = null;
 
-        $avatarsDir = __DIR__ . '/../../avatars';
+        // Store uploads inside public/avatars so they are web-accessible
+        $avatarsDir = __DIR__ . '/../../public/avatars';
         if (!is_dir($avatarsDir)) {
             @mkdir($avatarsDir, 0775, true);
         }
