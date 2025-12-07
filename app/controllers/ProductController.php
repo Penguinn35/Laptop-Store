@@ -44,6 +44,8 @@ class ProductController
         $products    = $this->laptopModel->getAll($keyword, $limit, $offset);
         $total_pages = ($total > 0) ? ceil($total / $limit) : 1;
 
+        $pageJs = 'cart';
+
         $data = [
             'keyword'     => $keyword,
             'page'        => $page,
@@ -71,6 +73,8 @@ class ProductController
     {
         $settings = $this->getSettings(); // Lấy setting cho footer/header
         
+        $pageJs = 'cart';
+
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if ($id <= 0) {
             echo "Sản phẩm không hợp lệ"; return;
@@ -102,6 +106,18 @@ class ProductController
     {
         // 1. Kiểm tra xem có phải yêu cầu AJAX không (dựa vào tham số ?ajax=1)
         $isAjax = isset($_GET['ajax']) && $_GET['ajax'] == 1;
+
+        // --- BẢO MẬT 2 LỚP: Kiểm tra Login ---
+        if (!isset($_SESSION['user'])) {
+            if ($isAjax) {
+                echo json_encode(['status' => 'error', 'message' => 'Vui lòng đăng nhập!']);
+                exit;
+            } else {
+                // Nếu không phải ajax thì đá về trang login hoặc home
+                header('Location: index.php?page=home');
+                exit;
+            }
+        }
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             if ($isAjax) { echo json_encode(['status' => 'error', 'message' => 'Invalid Request']); exit; }

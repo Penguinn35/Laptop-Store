@@ -13,9 +13,12 @@ if (isset($_SESSION['cart'])) {
 }
 ?>
 
+<script>
+  // Biến global để JS khác (cart.js) dùng
+  window.isLoggedIn = <?= $isLoggedIn ? 'true' : 'false' ?>;
+</script>
 
 <!-- NAVBAR -->
-
 <div class="myNavbar-wrap">
   <nav class="myNavbar">
 
@@ -35,34 +38,23 @@ if (isset($_SESSION['cart'])) {
       <li><a href="index.php?page=contact">Liên hệ</a></li>
       <li><a href="index.php?page=faq">FAQ</a></li>
       <li><a href="index.php?page=about">Về chúng tôi</a></li>
+
+      <!-- Mobile user section -->
       <li class="mobile-user">
         <?php if (!$isLoggedIn): ?>
           <button id="loginBtn_mobile" class="btn-small">Đăng nhập</button>
           <button id="registerBtn_mobile" class="btn-small">Đăng ký</button>
-
-
         <?php else: ?>
           <?php if ($user['role'] === 'admin'): ?>
             <a href="/laptop_store/public/index.php?page=admin" class="admin-btn-mobile">Dashboard</a>
           <?php endif; ?>
           <a href="/laptop_store/public/index.php?page=profile">Thay đổi thông tin</a>
           <a href="/laptop_store/public/index.php?page=logout">Đăng xuất</a>
-          <div class="nav-item me-3">
-            <a href="index.php?page=cart" class="btn btn-outline-dark position-relative border-0">
-              <i class="fas fa-shopping-cart fa-lg"></i>
-              <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                style="<?php echo $cartCount > 0 ? '' : 'display:none'; ?>">
-                <?= $cartCount ?>
-              </span>
-            </a>
-          </div>
         <?php endif; ?>
-
       </li>
     </ul>
 
-
-    <!-- User section -->
+    <!-- User + Cart -->
     <div class="user">
       <?php if ($isLoggedIn): ?>
         <?php if ($user['role'] === 'admin'): ?>
@@ -70,11 +62,10 @@ if (isset($_SESSION['cart'])) {
         <?php endif; ?>
 
         <div class="user-menu">
-
           <div class="userGrap">
             <?php
-            $avatar = $user['avatar'] ?? '';
-            $avatarUrl = $avatar ? "/laptop_store/public/avatars/" . htmlspecialchars($avatar) : '';
+              $avatar = $user['avatar'] ?? '';
+              $avatarUrl = $avatar ? "/laptop_store/public/avatars/" . htmlspecialchars($avatar) : '';
             ?>
             <?php if ($avatarUrl): ?>
               <img src="<?= $avatarUrl ?>" alt="Avatar" id="userDropdown" class="rounded-circle" style="width:36px;height:36px;object-fit:cover;">
@@ -85,7 +76,7 @@ if (isset($_SESSION['cart'])) {
             <?php endif; ?>
             <div class="userText">
               <p>Welcome,</p>
-              <p> <?= htmlspecialchars($user['username']) ?></p>
+              <p><?= htmlspecialchars($user['username']) ?></p>
             </div>
           </div>
           <div class="dropdown" id="dropdownMenu">
@@ -93,29 +84,30 @@ if (isset($_SESSION['cart'])) {
             <a href="index.php?page=logout">Đăng xuất</a>
           </div>
         </div>
-        <div class="nav-item me-3">
-          <a href="index.php?page=cart" class="btn btn-outline-dark position-relative border-0" style="padding: 15px;">
-            <i class="fas fa-shopping-cart fa-lg"></i>
-            <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-              style="<?php echo $cartCount > 0 ? '' : 'display:none'; ?>">
-              <?= $cartCount ?>
-            </span>
-          </a>
-        </div>
       <?php else: ?>
         <button id="loginBtn" class="Btn">Đăng nhập</button>
         <button id="registerBtn" class="Btn">Đăng ký</button>
-
-
       <?php endif; ?>
 
-
+      <!-- GIỎ HÀNG: LUÔN HIỂN THỊ -->
+      <div class="nav-item me-3">
+        <a href="index.php?page=cart"
+           id="cartLink"
+           class="btn btn-outline-dark position-relative border-0"
+           style="padding: 15px;">
+          <i class="fas fa-shopping-cart fa-lg"></i>
+          <span id="cart-badge"
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                style="<?php echo $cartCount > 0 ? '' : 'display:none'; ?>">
+            <?= $cartCount ?>
+          </span>
+        </a>
+      </div>
 
     </div>
 
   </nav>
 </div>
-
 
 <!-- Popup -->
 <div id="popupOverlay" class="overlay">
@@ -130,18 +122,16 @@ if (isset($_SESSION['cart'])) {
   const overlay = $("#popupOverlay");
   const popupContent = $("#popupContent");
 
-
-  $("#loginBtn").on("click", () => {
+  // Hàm dùng chung để mở form Đăng nhập
+  window.openLoginPopup = function() {
     $.get("api/auth/login_form.php", html => {
       popupContent.html(html);
       overlay.addClass("show");
 
-
       $("#loginForm").on("submit", e => {
-        console.log("in");
-
         e.preventDefault();
-        $.post("api/auth/login_action.php",
+        $.post(
+          "api/auth/login_action.php",
           $("#loginForm").serialize(),
           res => {
             if (res.status === "ok" || res.status === "admin") {
@@ -154,12 +144,12 @@ if (isset($_SESSION['cart'])) {
         );
       });
     });
+  };
+
+  // Đăng nhập / Đăng ký desktop
+  $("#loginBtn").on("click", () => {
+    openLoginPopup();
   });
-
-
-
-
-
 
   $("#registerBtn").on("click", () => {
     $.get("api/auth/register_form.php", html => {
@@ -168,30 +158,10 @@ if (isset($_SESSION['cart'])) {
     });
   });
 
+  // Đăng nhập / Đăng ký mobile
   $("#loginBtn_mobile").on("click", () => {
     $("#navLinks").removeClass("show");
-    $.get("api/auth/login_form.php", html => {
-      popupContent.html(html);
-      overlay.addClass("show");
-
-
-      $("#loginForm").on("submit", e => {
-        console.log("in");
-
-        e.preventDefault();
-        $.post("api/auth/login_action.php",
-          $("#loginForm").serialize(),
-          res => {
-            if (res.status === "ok" || res.status === "admin") {
-              location.reload();
-            } else {
-              $("#loginError").text(res.message);
-            }
-          },
-          "json"
-        );
-      });
-    });
+    openLoginPopup();
   });
 
   $("#registerBtn_mobile").on("click", () => {
@@ -202,12 +172,21 @@ if (isset($_SESSION['cart'])) {
     });
   });
 
+  // CLICK GIỎ HÀNG: NẾU CHƯA LOGIN THÌ MỞ POPUP
+  $("#cartLink").on("click", function(e) {
+    if (!window.isLoggedIn) {
+      e.preventDefault();
+      openLoginPopup();
+    }
+  });
 
+  // Đóng popup
   $(".close").on("click", () => overlay.removeClass("show"));
   $(window).on("click", e => {
     if ($(e.target).is("#popupOverlay")) overlay.removeClass("show");
   });
 
+  // Menu mobile
   document.getElementById("hamburgerBtn").addEventListener("click", () => {
     document.getElementById("navLinks").classList.toggle("show");
   });
@@ -218,6 +197,7 @@ if (isset($_SESSION['cart'])) {
     }
   });
 
+  // Dropdown user
   const userIcon = document.getElementById('userDropdown');
   const dropdown = document.getElementById('dropdownMenu');
   if (userIcon) {

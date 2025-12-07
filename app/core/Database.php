@@ -4,10 +4,11 @@ class Database {
   private $user = "root";
   private $pass = "";
   private $db = "laptop_store";
+  private $port = 3307;
   private $conn;
 
   public function getConnection() {
-    $this->conn = new mysqli($this->host, $this->user, $this->pass, $this->db);
+    $this->conn = new mysqli($this->host, $this->user, $this->pass, $this->db, port: $this->port);
     if ($this->conn->connect_error) {
       die("Kết nối thất bại: " . $this->conn->connect_error);
     }

@@ -1,16 +1,31 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    // --- HÀM KIỂM TRA ĐĂNG NHẬP ---
+    function requireLoginIfNeeded() {
+        // Biến window.isLoggedIn được định nghĩa ở navbar.php
+        if (typeof window.isLoggedIn !== 'undefined' && window.isLoggedIn) {
+            return true; // Đã login -> Cho phép chạy tiếp
+        }
+        
+        // Chưa login -> Mở popup
+        // Hàm openLoginPopup được định nghĩa ở navbar.php
+        if (typeof window.openLoginPopup === 'function') {
+            window.openLoginPopup();
+        } else {
+            alert('Vui lòng đăng nhập để thực hiện chức năng này.');
+        }
+        return false; // Chặn hành động
+    }
+
+    // --- HÀM GỬI AJAX THÊM GIỎ HÀNG ---
     function sendAddToCart(productId, quantity, buttonElement) {
-        // Lưu text cũ và hiện loading
         const originalContent = buttonElement.innerHTML;
-        buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang thêm...';
+        buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
         buttonElement.disabled = true;
 
         fetch('index.php?page=cart_add&ajax=1', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 product_id: productId,
                 quantity: quantity
@@ -19,15 +34,14 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                // Cập nhật số trên icon giỏ hàng
                 const badge = document.getElementById('cart-badge');
                 if (badge) {
                     badge.innerText = data.total_qty;
                     badge.style.display = 'inline-block';
                 }
-                alert('Đã thêm sản phẩm vào giỏ hàng thành công!');
+                alert('✅ Đã thêm sản phẩm vào giỏ hàng!');
             } else {
-                alert('Lỗi: ' + data.message);
+                alert('❌ Lỗi: ' + data.message);
             }
         })
         .catch(err => {
@@ -35,30 +49,44 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Có lỗi xảy ra khi kết nối server.');
         })
         .finally(() => {
-            // Trả lại nút như cũ
             buttonElement.innerHTML = originalContent;
             buttonElement.disabled = false;
         });
     }
 
-    // --- XỬ LÝ 1: Nút "Thêm" ở trang Danh sách (page=products) ---
-    // Sử dụng Event Delegation để đảm bảo chạy được ngay cả khi HTML thay đổi
+    // ============================================================
+    // 1. XỬ LÝ NÚT "THÊM" Ở TRANG DANH SÁCH (Event Delegation)
+    // ============================================================
     document.body.addEventListener('click', function(e) {
-        // Tìm xem cái được click có phải là nút .add-to-cart-btn hoặc con của nó không
+        // Tìm nút được click
         const btn = e.target.closest('.add-to-cart-btn');
+        
         if (btn) {
-            e.preventDefault(); // Chặn hành động mặc định
+            e.preventDefault();
+
+            // QUAN TRỌNG: Kiểm tra login trước
+            if (!requireLoginIfNeeded()) {
+                return; // Dừng lại nếu chưa login
+            }
+
             const productId = btn.getAttribute('data-id');
             sendAddToCart(productId, 1, btn);
         }
     });
 
-    // --- XỬ LÝ 2: Form "Thêm" ở trang Chi tiết (page=product_detail) ---
+    // ============================================================
+    // 2. XỬ LÝ FORM "THÊM" Ở TRANG CHI TIẾT
+    // ============================================================
     const detailForm = document.getElementById('addToCartForm');
     if (detailForm) {
         detailForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Chặn chuyển trang sang cart_add
-            
+            e.preventDefault();
+
+            // QUAN TRỌNG: Kiểm tra login trước
+            if (!requireLoginIfNeeded()) {
+                return; // Dừng lại nếu chưa login
+            }
+
             const formData = new FormData(detailForm);
             const productId = formData.get('product_id');
             const quantity = formData.get('quantity');
@@ -67,5 +95,4 @@ document.addEventListener('DOMContentLoaded', function() {
             sendAddToCart(productId, quantity, btn);
         });
     }
-
 });
