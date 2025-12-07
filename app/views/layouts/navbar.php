@@ -47,16 +47,17 @@ if (isset($_SESSION['cart'])) {
           <?php endif; ?>
           <a href="/laptop_store/public/index.php?page=profile">Thay đổi thông tin</a>
           <a href="/laptop_store/public/index.php?page=logout">Đăng xuất</a>
+          <div class="nav-item me-3">
+            <a href="index.php?page=cart" class="btn btn-outline-dark position-relative border-0">
+              <i class="fas fa-shopping-cart fa-lg"></i>
+              <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                style="<?php echo $cartCount > 0 ? '' : 'display:none'; ?>">
+                <?= $cartCount ?>
+              </span>
+            </a>
+          </div>
         <?php endif; ?>
-        <div class="nav-item me-3">
-        <a href="index.php?page=cart" class="btn btn-outline-dark position-relative border-0">
-          <i class="fas fa-shopping-cart fa-lg"></i>
-          <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-            style="<?php echo $cartCount > 0 ? '' : 'display:none'; ?>">
-            <?= $cartCount ?>
-          </span>
-        </a>
-      </div>
+
       </li>
     </ul>
 
@@ -92,7 +93,15 @@ if (isset($_SESSION['cart'])) {
             <a href="index.php?page=logout">Đăng xuất</a>
           </div>
         </div>
-
+        <div class="nav-item me-3">
+          <a href="index.php?page=cart" class="btn btn-outline-dark position-relative border-0" style="padding: 15px;">
+            <i class="fas fa-shopping-cart fa-lg"></i>
+            <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+              style="<?php echo $cartCount > 0 ? '' : 'display:none'; ?>">
+              <?= $cartCount ?>
+            </span>
+          </a>
+        </div>
       <?php else: ?>
         <button id="loginBtn" class="Btn">Đăng nhập</button>
         <button id="registerBtn" class="Btn">Đăng ký</button>
@@ -100,15 +109,7 @@ if (isset($_SESSION['cart'])) {
 
       <?php endif; ?>
 
-      <div class="nav-item me-3">
-        <a href="index.php?page=cart" class="btn btn-outline-dark position-relative border-0" style="padding: 15px;">
-          <i class="fas fa-shopping-cart fa-lg"></i>
-          <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-            style="<?php echo $cartCount > 0 ? '' : 'display:none'; ?>">
-            <?= $cartCount ?>
-          </span>
-        </a>
-      </div>
+
 
     </div>
 
