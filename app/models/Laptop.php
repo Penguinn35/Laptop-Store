@@ -260,8 +260,12 @@ class Laptop
             die("Query error: " . $this->conn->error);
         }
 
+        // SỬA LẠI DÒNG NÀY:
+        // Thứ tự: brand(i), name(s), desc(s), cpu(s), ram(s), stor(s), gpu(s), screen(s), price(d), image(s), stock(i), id(i)
+        // Chuỗi đúng: "isssssssdsii" (image là 's' - string)
+        
         $stmt->bind_param(
-            "issssssdsiii",
+            "isssssssdsii", 
             $brand_id,
             $name,
             $description,
@@ -271,7 +275,7 @@ class Laptop
             $gpu,
             $screen,
             $price,
-            $image,
+            $image, // Đây là biến gây lỗi trước đó, giờ đã là 's'
             $stock,
             $id
         );

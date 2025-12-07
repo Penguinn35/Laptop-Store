@@ -56,22 +56,44 @@ class AdminProductController
 
     public function create()
     {
-        $settings = $this->getSettings(); // <--- Bổ sung
-        $brands = $this->getBrands();
-        $error = '';
+        $settings = $this->getSettings();
+        $brands   = $this->getBrands();
+        $error    = '';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = $_POST;
-            $imageName = 'no-image.jpg';
-            if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-                $targetDir = "images/products_img/";
-                $fileExtension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
-                $newFileName = uniqid() . '.' . $fileExtension;
-                if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetDir . $newFileName)) {
-                    $imageName = $newFileName;
-                }
+
+            // Thư mục lưu ảnh: /public/images/products_img/
+            $uploadDir = __DIR__ . '/../../public/images/products_img/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
             }
-            $data['image'] = $imageName;
+
+            // Mặc định nếu không upload thì dùng no-image.jpg (hoặc để null tùy bạn)
+            $imageName = 'no-image.jpg';
+
+            if (!empty($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $ext  = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+
+                // Tạo tên file "đẹp" + unique
+                $slug = preg_replace('/[^a-z0-9]+/i', '-', strtolower($_POST['name'] ?? 'laptop'));
+                $imageName = $slug . '-' . time() . '.' . $ext;
+
+                move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $imageName);
+            }
+
+            $data = [
+                'brand_id'    => $_POST['brand_id'] ?? null,
+                'name'        => $_POST['name'] ?? '',
+                'description' => $_POST['description'] ?? '',
+                'cpu'         => $_POST['cpu'] ?? '',
+                'ram'         => $_POST['ram'] ?? '',
+                'storage'     => $_POST['storage'] ?? '',
+                'gpu'         => $_POST['gpu'] ?? '',
+                'screen'      => $_POST['screen'] ?? '',
+                'price'       => $_POST['price'] ?? 0,
+                'stock'       => $_POST['stock'] ?? 0,
+                'image'       => $imageName,
+            ];
 
             if ($this->laptopModel->create($data)) {
                 header('Location: index.php?page=admin_products');
@@ -81,40 +103,79 @@ class AdminProductController
             }
         }
 
+        // GET: chỉ hiển thị form
         $useTabler = true;
         require_once __DIR__ . '/../views/admin/products/create.php';
     }
 
-    public function edit()
+public function edit()
     {
-        $settings = $this->getSettings(); // <--- Bổ sung
-        
+        $settings = $this->getSettings();
+        $brands   = $this->getBrands();
+        $error    = '';
+
         $id = (int)($_GET['id'] ?? 0);
         $product = $this->laptopModel->findById($id);
-        $brands = $this->getBrands();
-        $error = '';
 
         if (!$product) {
             echo "Sản phẩm không tồn tại."; return;
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = $_POST;
-            $data['image'] = $product['image']; 
-            if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-                $targetDir = "images/products_img/";
-                $fileExtension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
-                $newFileName = uniqid() . '.' . $fileExtension;
-                if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetDir . $newFileName)) {
-                    $data['image'] = $newFileName;
+            
+            // Đường dẫn thư mục ảnh
+            $uploadDir = __DIR__ . '/../../public/images/products_img/';
+            
+            // 1. Mặc định lấy tên ảnh CŨ trong database
+            $imageName = $product['image']; 
+
+            // 2. Kiểm tra nếu người dùng CÓ chọn file mới
+            if (!empty($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                
+                // Lấy đuôi file
+                $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+                
+                // Đặt tên ngẫu nhiên: 65a1b...jpg
+                $newFileName = uniqid() . '.' . $ext;
+
+                // Upload file mới
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $newFileName)) {
+                    
+                    // XÓA ẢNH CŨ (Trừ khi nó là no-image.jpg) để dọn rác
+                    $oldImage = $product['image'];
+                    if (!empty($oldImage) && $oldImage !== 'no-image.jpg') {
+                        $oldPath = $uploadDir . $oldImage;
+                        if (file_exists($oldPath)) {
+                            unlink($oldPath); // Xóa file cũ đi
+                        }
+                    }
+
+                    // Gán tên ảnh MỚI để chuẩn bị lưu vào DB
+                    $imageName = $newFileName;
                 }
             }
 
+            // 3. Chuẩn bị dữ liệu update
+            $data = [
+                'brand_id'    => $_POST['brand_id'] ?? $product['brand_id'],
+                'name'        => $_POST['name'] ?? $product['name'],
+                'description' => $_POST['description'] ?? $product['description'],
+                'cpu'         => $_POST['cpu'] ?? $product['cpu'],
+                'ram'         => $_POST['ram'] ?? $product['ram'],
+                'storage'     => $_POST['storage'] ?? $product['storage'],
+                'gpu'         => $_POST['gpu'] ?? $product['gpu'],
+                'screen'      => $_POST['screen'] ?? $product['screen'],
+                'price'       => $_POST['price'] ?? $product['price'],
+                'stock'       => $_POST['stock'] ?? $product['stock'],
+                'image'       => $imageName, 
+            ];
+
+            // 4. Gọi Model để lưu
             if ($this->laptopModel->update($id, $data)) {
                 header('Location: index.php?page=admin_products');
                 exit;
             } else {
-                $error = "Có lỗi xảy ra khi cập nhật.";
+                $error = "Có lỗi xảy ra khi cập nhật vào Database.";
             }
         }
 
